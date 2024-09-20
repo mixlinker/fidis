@@ -1,0 +1,90 @@
+{
+  "page": {
+    "demos": {
+      "title": "演示",
+      "element-plus": "Element Plus"
+    },
+    "usercenter": {
+      "title": "用户中心"
+    },
+    "company": {
+      "title": "组织列表",
+      "name": "组织名称",
+      "parent-company": "父组织",
+      "detail-title": "组织详情",
+      "add-title": "添加组织",
+      "edit-title": "编辑组织",
+      "message": {
+        "name": "请输入组织名称",
+        "list_order": "排序不能为空"
+      }
+    },
+    "role": {
+      "title": "角色列表",
+      "name": "角色名称",
+      "admin": "管理员",
+      "add-title": "添加角色",
+      "edit-title": "编辑角色",
+      "bind-menu-title": "菜单管理",
+      "detail-title": "角色详情",
+      "bind-menu": "菜单管理",
+      "menu": "菜单",
+      "message": {
+        "name": "请输入角色名称",
+        "list_order": "排序不能为空"
+      }
+    },
+    "user": {
+      "title": "用户列表",
+      "name": "用户名称",
+      "alias": "用户别名",
+      "add-title": "添加用户",
+      "edit-title": "编辑用户",
+      "detail-title": "用户详情",
+      "head_image": "头像",
+      "by_org": "所属组织",
+      "by_role": "所属角色",
+      "is_leader": "是否领导",
+      "bind-data": "绑定数据",
+      "message": {
+        "name": "请输入用户名称",
+        "list_order": "排序不能为空",
+        "by_org": "请选择所属组织",
+        "by_role": "请选择所属角色",
+        "alias": "请输入用户别名",
+        "mobile": "请输入手机号",
+        "email": "请输入邮箱",
+        "password": "请输入密码",
+        "eamil_reg": "邮箱格式错误",
+        "mobile-reg": "手机号格式错误"
+      }
+    },
+    "menuManage": {
+      "title": "菜单管理"
+    },
+    "menu": {
+      "title": "菜单列表",
+      "name": "菜单名称",
+      "add-title": "添加菜单",
+      "edit-title": "编辑菜单",
+      "dashboard-uid": "显示版id",
+      "detail-title": "菜单详情",
+      "message": {
+        "name": "请输入菜单名称"
+      }
+    },
+    "data-source": {
+      "title": "数据源"
+    },
+    "in-source": {
+      "title": "内部数据源",
+      "detail-title": "内部数据源详情",
+      "name": "数据源名称",
+      "type": "类型",
+      "message": {
+        "confirm-stop": "确认停用",
+        "confirm-start": "确认启用"
+      }
+    }
+  }
+}
