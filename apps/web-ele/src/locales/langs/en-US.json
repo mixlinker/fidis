@@ -1,8 +1,86 @@
 {
   "page": {
-    "demos": {
-      "title": "Demos",
-      "element-plus": "Element Plus"
+    "usercenter": {
+      "title": "User Center"
+    },
+    "company": {
+      "title": "Organization List",
+      "name": "Organization Name",
+      "parent-company": "Parent Organization",
+      "detail-title": "Organization Details",
+      "add-title": "Add Organization",
+      "edit-title": "Edit Organization",
+      "message": {
+        "name": "Please enter the organization name",
+        "list_order": "Sorting cannot be empty"
+      }
+    },
+    "role": {
+      "title": "Role List",
+      "name": "Role Name",
+      "admin": "Administrator",
+      "add-title": "Add Role",
+      "edit-title": "Edit Role",
+      "bind-menu-title": "Menu Management",
+      "detail-title": "Role Details",
+      "bind-menu": "Menu Management",
+      "menu": "Menu",
+      "message": {
+        "name": "Please enter the role name",
+        "list_order": "Sorting cannot be empty"
+      }
+    },
+    "user": {
+      "title": "User List",
+      "name": "User Name",
+      "alias": "User Alias",
+      "add-title": "Add User",
+      "edit-title": "Edit User",
+      "detail-title": "User Details",
+      "head_image": "Avatar",
+      "by_org": "Affiliated Organization",
+      "by_role": "Affiliated Role",
+      "is_leader": "Is Leader",
+      "bind-data": "Bind Data",
+      "message": {
+        "name": "Please enter the user name",
+        "list_order": "Sorting cannot be empty",
+        "by_org": "Please select the affiliated organization",
+        "by_role": "Please select the affiliated role",
+        "alias": "Please enter the user alias",
+        "mobile": "Please enter the mobile number",
+        "email": "Please enter the email",
+        "password": "Please enter the password",
+        "eamil_reg": "Email format is incorrect",
+        "mobile-reg": "Mobile number format is incorrect"
+      }
+    },
+    "menuManage": {
+      "title": "Menu Management"
+    },
+    "menu": {
+      "title": "Menu List",
+      "name": "Menu Name",
+      "add-title": "Add Menu",
+      "edit-title": "Edit Menu",
+      "dashboard-uid": "Display Board ID",
+      "detail-title": "Menu Details",
+      "message": {
+        "name": "Please enter the menu name"
+      }
+    },
+    "data-source": {
+      "title": "Data Source"
+    },
+    "in-source": {
+      "title": "Internal Data Source",
+      "detail-title": "Internal Data Source Details",
+      "name": "Data Source Name",
+      "type": "Type",
+      "message": {
+        "confirm-stop": "Confirm to disable",
+        "confirm-start": "Confirm to enable"
+      }
     }
   }
 }

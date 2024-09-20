@@ -39,8 +39,18 @@ export async function delRoleApi(data: { id: number }) {
 /**
  * 详情
  */
+interface detailDataType {
+  name: string;
+  tag: string[];
+  is_active: number;
+  list_order: number;
+  created_at: string;
+  updated_at: string;
+  description: string;
+  menus: { id: number }[];
+}
 export async function getRoleApi(data: { id: number }) {
-  return requestClient.post<any>('/auth/role/detail', data);
+  return requestClient.post<detailDataType>('/auth/role/detail', data);
 }
 
 /**

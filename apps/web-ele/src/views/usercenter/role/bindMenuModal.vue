@@ -5,12 +5,7 @@ import { ref } from 'vue';
 
 import { useVbenModal } from '@vben/common-ui';
 
-import {
-  bindMenuApi,
-  getMenuListApi,
-  getUserMenuApi,
-  unBindMenuApi,
-} from '#/api';
+import { bindMenuApi, getMenuListApi, getRoleApi, unBindMenuApi } from '#/api';
 import { $t } from '#/locales';
 
 interface menuItemType {
@@ -55,8 +50,10 @@ const [Modal, modalApi] = useVbenModal({
           deleteMenuList.push(item);
         }
       });
-      bindMenuApi({ id: Form.value.id, menu_id_list: addMenuList });
-      unBindMenuApi({ id: Form.value.id, menu_id_list: deleteMenuList });
+      addMenuList.length > 0 &&
+        bindMenuApi({ id: Form.value.id, menu_id_list: addMenuList });
+      deleteMenuList.length > 0 &&
+        unBindMenuApi({ id: Form.value.id, menu_id_list: deleteMenuList });
       modalApi.close();
     }
   },
@@ -70,9 +67,9 @@ const [Modal, modalApi] = useVbenModal({
       }).then((res) => {
         menuList.value = res.data;
       });
-      getUserMenuApi().then((res) => {
-        Form.value.menu_id_list = res.map((item) => item.id);
-        menuIdList.value = res.map((item) => item.id);
+      getRoleApi({ id: data.id }).then((res) => {
+        Form.value.menu_id_list = res.menus.map((item) => item.id);
+        menuIdList.value = res.menus.map((item) => item.id);
       });
     }
   },

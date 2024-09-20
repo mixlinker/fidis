@@ -1,9 +1,5 @@
 {
   "page": {
-    "demos": {
-      "title": "演示",
-      "element-plus": "Element Plus"
-    },
     "usercenter": {
       "title": "用户中心"
     },

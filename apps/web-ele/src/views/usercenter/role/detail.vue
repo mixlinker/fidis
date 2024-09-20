@@ -13,6 +13,7 @@ interface detailDataType {
   created_at: string;
   updated_at: string;
   description: string;
+  menus: { id: number }[];
 }
 const detailData = ref<detailDataType>();
 const tag = ref<string[]>();

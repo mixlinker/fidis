@@ -88,7 +88,7 @@ const rightButton = ref([
     type: 'update',
   },
   {
-    icon: 'Edit',
+    icon: 'DocumentAdd',
     name: $t('page.user.bind-data'),
     type: 'binddata',
   },
