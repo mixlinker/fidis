@@ -37,12 +37,18 @@ export async function logoutApi() {
 }
 
 /**
+ * 退出登录
+ */
+export async function getUserByToken() {
+  return requestClient.post<any>('/auth/get-user-by-token');
+}
+
+/**
  * 代理转发
  */
 export async function proxyApi(data: any) {
   return requestClient.post<any>('/proxy/api', data);
 }
-
 /**
  * 刷新accessToken
  */

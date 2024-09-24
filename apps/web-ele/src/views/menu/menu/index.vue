@@ -3,6 +3,7 @@ import { computed, onMounted, provide, reactive, ref } from 'vue';
 import { useRouter } from 'vue-router';
 
 import { useVbenModal } from '@vben/common-ui';
+import { VbenIcon } from '@vben-core/shadcn-ui';
 
 import { Plus, Search } from '@element-plus/icons-vue';
 import { useWindowSize } from '@vueuse/core';
@@ -131,6 +132,7 @@ provide('getList', getList);
 <template>
   <div class="p-3">
     <div class="mb-3">
+      <VbenIcon icon="lucide:air-vent" />
       <el-select
         v-model="searchOption.fieldKey"
         class="mr-[12px]"

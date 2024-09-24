@@ -56,8 +56,8 @@ export async function getUserApi(data: { id: number }) {
  * 绑定数据
  */
 export async function userBindDataApi(data: {
-  source_type: string;
-  uid_list: string[];
+  source_type: string | undefined;
+  uid_list: number[];
   user_id: number;
 }) {
   return requestClient.post<any>('/auth/user/bind-datum', data);
@@ -67,8 +67,8 @@ export async function userBindDataApi(data: {
  * 解绑数据
  */
 export async function userUbindDataApi(data: {
-  source_type: string;
-  uid_list: string[];
+  source_type: string | undefined;
+  uid_list: number[];
   user_id: number;
 }) {
   return requestClient.post<any>('/auth/user/unbind-datum', data);

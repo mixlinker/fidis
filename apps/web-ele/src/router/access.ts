@@ -173,7 +173,7 @@ async function generateAccess(options: GenerateMenuAndRoutesOptions) {
           component: '/menu/dashboard/index.vue',
           meta: {
             affixTab: false,
-            icon: 'lucide:circle',
+            icon: 'lucide:circle-dot',
             title: item?.name,
           },
           name: `DashBoard${item.url}${item.list_order}`,

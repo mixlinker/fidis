@@ -70,7 +70,11 @@
       }
     },
     "data-source": {
-      "title": "数据源"
+      "title": "数据源",
+      "name": "项目名称",
+      "uid": "项目编号",
+      "statistics": "统计项目",
+      "calculate": "计算项目"
     },
     "in-source": {
       "title": "内部数据源",

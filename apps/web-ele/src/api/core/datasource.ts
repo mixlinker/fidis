@@ -4,7 +4,9 @@ import { requestClient } from '#/api/request';
  * 列表
  */
 export async function getInDataSourceApi() {
-  return requestClient.post<{ name: string }[]>('/data-source/list');
+  return requestClient.post<{ name: string; type: string }[]>(
+    '/data-source/list',
+  );
 }
 
 /* 

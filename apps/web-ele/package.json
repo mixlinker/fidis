@@ -27,6 +27,7 @@
   },
   "dependencies": {
     "@element-plus/icons-vue": "^2.3.1",
+    "@vben-core/shadcn-ui": "workspace:*",
     "@vben/access": "workspace:*",
     "@vben/common-ui": "workspace:*",
     "@vben/constants": "workspace:*",
@@ -44,8 +45,8 @@
     "@vueuse/core": "^11.0.3",
     "dayjs": "^1.11.13",
     "element-plus": "^2.8.2",
-    "mixboard": "^0.0.15",
-    "mixlinker2d": "^1.1.6",
+    "mixboard": "^1.0.3",
+    "mixlinker2d": "^1.1.9",
     "pinia": "2.2.2",
     "vue": "^3.5.4",
     "vue-router": "^4.4.4"

@@ -8,10 +8,11 @@ import { Plus, Search } from '@element-plus/icons-vue';
 import { useWindowSize } from '@vueuse/core';
 import { ElMessageBox } from 'element-plus';
 
-import { delUserApi, getUserBindDataApi, getUserListApi } from '#/api';
+import { delUserApi, getUserListApi } from '#/api';
 import mixRightMenu from '#/components/mix-right-menu/index.vue';
 import { $t } from '#/locales';
 
+import dataModal from './bindDataModal.vue';
 import editModal from './modal.vue';
 
 const router = useRouter();
@@ -63,9 +64,15 @@ const handleCurrentChange = (val: number) => {
   page.currentPage = val;
   getList();
 };
+
 /* 添加和编辑弹窗初始化*/
 const [Modal, modalApi] = useVbenModal({
   connectedComponent: editModal,
+});
+
+/* 绑定数据 弹窗初始化 */
+const [DataModal, DataModalApi] = useVbenModal({
+  connectedComponent: dataModal,
 });
 
 /* 添加 */
@@ -101,7 +108,8 @@ const rightButton = ref([
 
 const rightFunction = {
   binddata: async (row: any) => {
-    getUserBindDataApi({ user_id: row.id });
+    DataModalApi.setData(row);
+    DataModalApi.open();
   },
   delete: (row: any) => {
     ElMessageBox.confirm($t('message.delete'), {
@@ -225,6 +233,7 @@ provide('getList', getList);
     </div>
 
     <Modal />
+    <DataModal />
   </div>
 </template>
 
