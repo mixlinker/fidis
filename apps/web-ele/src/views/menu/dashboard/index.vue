@@ -25,12 +25,18 @@ onMounted(async () => {
 
 <template>
   <div class="dashboard-wrap">
-    <mixlinker2d v-if="engine === 'openboard'" :setting="script" />
+    <mixlinker2d
+      v-if="engine === 'openboard'"
+      :setting="script"
+      http_proxy="/fidis"
+      ws_proxy="/fidis/ws"
+    />
     <mix-dashboard
       v-if="script && engine === 'old'"
       :params="{
         script,
         ws_proxy: '/fidis/ws',
+        http_proxy: '/fidis',
       }"
       :type="type"
     />

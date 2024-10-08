@@ -190,11 +190,11 @@ importers:
         specifier: ^2.8.2
         version: 2.8.2(vue@3.5.4(typescript@5.6.2))
       mixboard:
-        specifier: ^1.0.3
-        version: 1.0.3(ant-design-vue@3.2.20(vue@3.5.4(typescript@5.6.2)))(echarts@5.5.1)(typescript@5.6.2)
+        specifier: ^1.0.5
+        version: 1.0.5(ant-design-vue@3.2.20(vue@3.5.4(typescript@5.6.2)))(echarts@5.5.1)(typescript@5.6.2)
       mixlinker2d:
-        specifier: ^1.1.9
-        version: 1.1.9(typescript@5.6.2)(vue@3.5.4(typescript@5.6.2))
+        specifier: ^1.1.12
+        version: 1.1.12(ant-design-vue@3.2.20(vue@3.5.4(typescript@5.6.2)))(echarts@5.5.1)(typescript@5.6.2)(vue@3.5.4(typescript@5.6.2))
       pinia:
         specifier: 2.2.2
         version: 2.2.2(typescript@5.6.2)(vue@3.5.4(typescript@5.6.2))
@@ -6854,15 +6854,17 @@ packages:
   mitt@3.0.1:
     resolution: {integrity: sha512-vKivATfr97l2/QBCYAkXYDbrIWPM2IIKEl7YPhjCvKlG3kE2gm+uBo6nEXK3M5/Ffh/FLpKExzOQ3JJoJGFKBw==}
 
-  mixboard@1.0.3:
-    resolution: {integrity: sha512-SIiGTLYJnxMzKg+/C90MZjDo9Yxu/oHd5bs/mAgUSTS9TDnODreqwyRfJc7COd8NtpftQGOExWS2ZhTIncif7Q==}
+  mixboard@1.0.5:
+    resolution: {integrity: sha512-s9joM1U9InXn9Bk5tT/FZs2CuV5lmCi3aEYD4rCFLIpwcYlxkFOlS4wIMDhcJLBeWr/JVbFgoRkUbFyc06YNWA==}
     peerDependencies:
       ant-design-vue: ^3.2.20
       echarts: ^5.4.3
 
-  mixlinker2d@1.1.9:
-    resolution: {integrity: sha512-PCXd/JnJQpoZ8zBk5knu3pLXYH1Ef+Xrm9kERunsy9vLBIgy3nWFQF4n46+ZQBcBS0JNom5LoamEgYZ8s1biGg==}
+  mixlinker2d@1.1.12:
+    resolution: {integrity: sha512-0OeYXJv5FPmTg+i98p734aH8c+Gx60Z/ZV6aObNzupKLCME07vdscBq5J+VxMQM7t1pA/WiQRx6kQ1xkKB00+Q==}
     peerDependencies:
+      ant-design-vue: ^3.2.20
+      echarts: ^5.5.0
       vue: 3.5.4
 
   mkdirp@1.0.4:
@@ -15874,7 +15876,7 @@ snapshots:
 
   mitt@3.0.1: {}
 
-  mixboard@1.0.3(ant-design-vue@3.2.20(vue@3.5.4(typescript@5.6.2)))(echarts@5.5.1)(typescript@5.6.2):
+  mixboard@1.0.5(ant-design-vue@3.2.20(vue@3.5.4(typescript@5.6.2)))(echarts@5.5.1)(typescript@5.6.2):
     dependencies:
       '@vueuse/core': 11.1.0(vue@3.5.4(typescript@5.6.2))
       ant-design-vue: 3.2.20(vue@3.5.4(typescript@5.6.2))
@@ -15895,7 +15897,7 @@ snapshots:
       - debug
       - typescript
 
-  mixlinker2d@1.1.9(typescript@5.6.2)(vue@3.5.4(typescript@5.6.2)):
+  mixlinker2d@1.1.12(ant-design-vue@3.2.20(vue@3.5.4(typescript@5.6.2)))(echarts@5.5.1)(typescript@5.6.2)(vue@3.5.4(typescript@5.6.2)):
     dependencies:
       '@meta2d/activity-diagram': 1.0.1(@meta2d/core@1.0.59)
       '@meta2d/chart-diagram': 1.0.9(@meta2d/core@1.0.59)
@@ -15907,6 +15909,7 @@ snapshots:
       '@meta2d/le5le-charts': 1.0.5(@meta2d/core@1.0.59)
       '@meta2d/sequence-diagram': 1.0.1(@meta2d/core@1.0.59)
       '@meta2d/svg': 1.0.6(@meta2d/core@1.0.59)
+      ant-design-vue: 3.2.20(vue@3.5.4(typescript@5.6.2))
       axios: 1.7.7
       dayjs: 1.11.13
       echarts: 5.5.1
