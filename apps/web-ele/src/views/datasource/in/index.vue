@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { computed, onMounted, provide, reactive, ref } from 'vue';
+import { useRouter } from 'vue-router';
 
 import { Search } from '@element-plus/icons-vue';
 import { useWindowSize } from '@vueuse/core';
@@ -13,6 +14,7 @@ import {
 import mixRightMenu from '#/components/mix-right-menu/index.vue';
 import { $t } from '#/locales';
 
+const router = useRouter();
 const { height } = useWindowSize();
 const TableMaxH = computed(() => {
   return height.value - 234;
@@ -63,9 +65,17 @@ const rightButton = ref([
     name: $t('common.stop'),
     type: 'stop',
   },
+  {
+    icon: 'Postcard',
+    name: $t('common.detail'),
+    type: 'item',
+  },
 ]);
 
 const rightFunction = {
+  item: (row: any) => {
+    router.push(`/inSourceDetail/${row.id}`);
+  },
   start: async (row: any) => {
     ElMessageBox.confirm($t('page.in-source.message.confirm-stop'), {
       type: 'warning',

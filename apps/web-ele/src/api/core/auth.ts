@@ -49,6 +49,25 @@ export async function getUserByToken() {
 export async function proxyApi(data: any) {
   return requestClient.post<any>('/proxy/api', data);
 }
+
+/**
+ * 获取授权配置
+ */
+export async function getAuthConfig() {
+  return requestClient.post<any>('/auth/config/detail');
+}
+
+/**
+ * 获取授权配置
+ */
+export async function setAuthConfig(data: {
+  app_id: string;
+  app_secret: string;
+  id: number;
+}) {
+  return requestClient.post<any>('/auth/config/detail', data);
+}
+
 /**
  * 刷新accessToken
  */

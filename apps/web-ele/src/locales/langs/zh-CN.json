@@ -84,6 +84,11 @@
       "message": {
         "confirm-stop": "确认停用",
         "confirm-start": "确认启用"
+      },
+      "statistics": {
+        "title": "统计结果",
+        "name": "统计项目名称",
+        "alias": "统计项目别名"
       }
     }
   }

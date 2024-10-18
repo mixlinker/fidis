@@ -23,3 +23,17 @@ onMounted(() => {
     <RouterView />
   </ElConfigProvider>
 </template>
+
+<style>
+body {
+  color: unset !important;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5 {
+  color: unset !important;
+}
+</style>

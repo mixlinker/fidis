@@ -25,6 +25,7 @@ import {
 
 import { useMagicKeys, whenever } from '@vueuse/core';
 
+import ApiProxySetModal from '../apipoxy-set/apiproxy-set-modal.vue';
 import { LockScreenModal } from '../lock-screen';
 
 interface Props {
@@ -75,6 +76,9 @@ const openPopover = ref(false);
 const { globalLockScreenShortcutKey, globalLogoutShortcutKey } =
   usePreferences();
 const lockStore = useLockStore();
+const [ApiProxyModal, ApiProxyModalApi] = useVbenModal({
+  connectedComponent: ApiProxySetModal,
+});
 const [LockModal, lockModalApi] = useVbenModal({
   connectedComponent: LockScreenModal,
 });
@@ -100,6 +104,10 @@ const enableShortcutKey = computed(() => {
 
 function handleOpenLock() {
   lockModalApi.open();
+}
+
+function handleOpenApiProxy() {
+  ApiProxyModalApi.open();
 }
 
 function handleSubmitLock(lockScreenPassword: string) {
@@ -141,7 +149,7 @@ if (enableShortcutKey.value) {
     :text="text"
     @submit="handleSubmitLock"
   />
-
+  <ApiProxyModal :avatar="avatar" :text="text" />
   <LogoutModal
     :cancel-text="$t('common.cancel')"
     :confirm-text="$t('common.confirm')"
@@ -195,6 +203,14 @@ if (enableShortcutKey.value) {
       >
         <VbenIcon :icon="menu.icon" class="mr-2 size-4" />
         {{ menu.text }}
+      </DropdownMenuItem>
+      <DropdownMenuSeparator />
+      <DropdownMenuItem
+        class="mx-1 flex cursor-pointer items-center rounded-sm py-1 leading-8"
+        @click="handleOpenApiProxy"
+      >
+        <VbenIcon class="mr-2 size-4" icon="lucide:key-round" />
+        {{ $t('widgets.apiproxy.title') }}
       </DropdownMenuItem>
       <DropdownMenuSeparator />
       <DropdownMenuItem

@@ -39,7 +39,7 @@ const page = reactive({
 interface ParamType {
   page_index: number;
   page_size: number;
-  [key: string]: any; // 允许其他动态键
+  [key: string]: any;
 }
 
 const getList = async () => {

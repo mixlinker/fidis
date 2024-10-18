@@ -19,8 +19,6 @@ import mixlinker2d from 'mixlinker2d';
 
 import { setupI18n } from '#/locales';
 
-// @ts-ignore 没有类型声明
-import * as echarts from '../node_modules/mixlinker2d/js/echarts.min.js';
 import App from './app.vue';
 import { router } from './router';
 
@@ -31,19 +29,15 @@ async function bootstrap(namespace: string) {
   }
   // 国际化 i18n 配置
   await setupI18n(app);
-
   // 配置 pinia-tore
   await initStores(app, { namespace });
-
   // 安装权限指令
   registerAccessDirective(app);
-
   // 配置路由及路由守卫
   app.use(router);
   app.use(ElementPlus);
   app.use(mixlinker2d);
   app.use(mixboard);
-  app.use(echarts);
   app.mount('#app');
 }
 

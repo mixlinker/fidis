@@ -22,3 +22,9 @@ export async function stopDataSourceApi(data: { id: number }) {
 export async function startDataSourceApi(data: { id: number }) {
   return requestClient.post<any>('/data-source/start', data);
 }
+/* 
+  结果列表
+*/
+export async function getDataSourceResultApi(data: { id: number }) {
+  return requestClient.post<any>('/data-source/datum', data);
+}
