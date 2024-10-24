@@ -10,7 +10,7 @@ prepare:
     #stage: build
     script:
         - node -v
-        - pnpm version
+        - npm version
         #- cd ../
         # - rm -rf v8_mixcomponent
         #- git clone git@192.168.88.6:fidis/fidis2020/expanded/frontend/v8_mixcomponent.git
