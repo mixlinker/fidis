@@ -11,16 +11,15 @@ prepare:
     script:
         - node -v
         - npm version
-        - npm i -g pnpm
         #- cd ../
         # - rm -rf v8_mixcomponent
         #- git clone git@192.168.88.6:fidis/fidis2020/expanded/frontend/v8_mixcomponent.git
-        - pnpm config set registry https://registry.npmmirror.com/
+        - npm config set registry https://registry.npmmirror.com/
         #- npm config set registry https://registry.npmjs.org/
         #- cd v8_mixcomponent && rm -rf node_modules &&  cnpm cache clean --force && cnpm install
         - cd ./apps/web-ele
         - ls -al
-        - pnpm install &&  pnpm run build --max-old-space-size=4096 --parallel=8
+        - npm install &&  npm run build --max-old-space-size=4096 --parallel=8
     tags:
         - v8-runner
     only:
