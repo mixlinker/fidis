@@ -10,8 +10,7 @@ prepare:
     #stage: build
     script:
         - node -v
-        - npm version
-        - npm i -g pnpm
+        - pnpm version
         # - npm config set registry https://registry.npmmirror.com/
         - cd ./apps/web-ele
         - ls -al
