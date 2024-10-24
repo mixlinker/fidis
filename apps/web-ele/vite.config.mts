@@ -6,7 +6,7 @@ export default defineConfig(async () => {
   return {
     application: {},
     vite: {
-      base: '/frontend/fidis/',
+      base: './frontend/fidis/',
       plugins: [
         ElementPlus({
           format: 'esm',
