@@ -17,7 +17,7 @@ prepare:
         - npm config set registry https://registry.npmmirror.com/
         #- npm config set registry https://registry.npmjs.org/
         #- cd v8_mixcomponent && rm -rf node_modules &&  cnpm cache clean --force && cnpm install
-        - cd ../apps/web-ele
+        - cd ./apps/web-ele
         - ls -al
         - rm -rf node_modules &&  npm cache clean --force
         - npm install &&  npm run build --max-old-space-size=4096 --parallel=8
