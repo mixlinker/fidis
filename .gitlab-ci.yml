@@ -77,7 +77,7 @@ host87:
     script:
         - echo ${DOCKERREPOSITORY}fidis:v8-latest-amd64
         - ssh root@192.168.88.86 docker pull ${DOCKERREPOSITORY}fidis:v8-latest-amd64
-        - ssh root@192.168.88.86 docker tag ${DOCKERREPOSITORY}fidis:v8-latest-amd64 ${DOCKERREPOSITORY}fidis:v8-latest
+        - ssh root@192.168.88.86 docker tag ${DOCKERREPOSITORY}fidis:v8-latest-amd64 ${DOCKERREPOSITORY}fidis:latest
         - ssh root@192.168.88.86 kubectl apply -f /etc/kubernetes/mixiot/fidis/fidis.yaml #解决下一命令删除出现不存在的问题
         - ssh root@192.168.88.86 kubectl delete -f /etc/kubernetes/mixiot/fidis/fidis.yaml
         - ssh root@192.168.88.86 kubectl apply -f /etc/kubernetes/mixiot/fidis/fidis.yaml
