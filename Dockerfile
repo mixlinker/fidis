@@ -1,31 +1,14 @@
-FROM node:20-slim AS builder
+ARG repository
+ARG php
+FROM ${repository}${php}
 
-# --max-old-space-size
-ENV PNPM_HOME="/pnpm"
-ENV PATH="$PNPM_HOME:$PATH"
-ENV NODE_OPTIONS=--max-old-space-size=8192
-ENV TZ=Asia/Shanghai
+ARG app
+ENV app ${app}
 
-RUN corepack enable
+ADD --chown=www-data:www-data . /var/www/html/${app}/
 
-WORKDIR /app
+RUN cd /var/www/html/${app}/ \
+    && cp ${app}.conf /etc/nginx/conf.d/ \
+    && cp run.sh /usr/local/
 
-# copy package.json and pnpm-lock.yaml to workspace
-COPY . /app
-
-RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --frozen-lockfile
-RUN pnpm run build
-
-RUN echo "Builder Success 🎉"
-
-FROM nginx:stable-alpine as production
-
-RUN echo "types { application/javascript js mjs; }" > /etc/nginx/conf.d/mjs.conf
-COPY --from=builder /app/playground/dist /usr/share/nginx/html
-
-COPY ./nginx.conf /etc/nginx/nginx.conf
-
-EXPOSE 8080
-
-# start nginx
-CMD ["nginx", "-g", "daemon off;"]
+ENTRYPOINT /bin/sh /usr/local/run.sh
