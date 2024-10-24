@@ -58,9 +58,9 @@ function defineApplicationConfig(userConfigPromise?: DefineApplicationOptions) {
       build: {
         rollupOptions: {
           output: {
-            assetFileNames: '/frontend/fidis/[ext]/[name]-[hash].[ext]',
-            chunkFileNames: '/frontend/fidis/js/[name]-[hash].mjs',
-            entryFileNames: '/frontend/fidis/jse/index-[name]-[hash].mjs',
+            assetFileNames: '[ext]/[name]-[hash].[ext]',
+            chunkFileNames: 'js/[name]-[hash].mjs',
+            entryFileNames: 'jse/index-[name]-[hash].mjs',
           },
         },
         target: 'es2015',
