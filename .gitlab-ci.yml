@@ -19,7 +19,6 @@ prepare:
         #- cd v8_mixcomponent && rm -rf node_modules &&  cnpm cache clean --force && cnpm install
         - cd ./apps/web-ele
         - ls -al
-        - rm -rf node_modules &&  npm cache clean --force
         - npm install &&  npm run build --max-old-space-size=4096 --parallel=8
     tags:
         - v8-runner
