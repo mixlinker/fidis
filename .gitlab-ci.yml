@@ -11,7 +11,7 @@ prepare:
     script:
         - node -v
         - npm version
-        - npm i -g pnpm
+        - npm i pnpm
         #- cd ../
         # - rm -rf v8_mixcomponent
         #- git clone git@192.168.88.6:fidis/fidis2020/expanded/frontend/v8_mixcomponent.git
