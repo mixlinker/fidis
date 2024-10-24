@@ -11,10 +11,11 @@ prepare:
     script:
         - node -v
         - pnpm version
+        - pnpm install
         # - npm config set registry https://registry.npmmirror.com/
         - cd ./apps/web-ele
         - ls -al
-        - pnpm install &&  pnpm run build
+        - pnpm run build
     tags:
         - v8-runner
     only:
