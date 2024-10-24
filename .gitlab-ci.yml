@@ -14,7 +14,7 @@ prepare:
         # - npm config set registry https://registry.npmmirror.com/
         - cd ./apps/web-ele
         - ls -al
-        - pnpm install &&  pnpm run build --max-old-space-size=4096 --parallel=8
+        - pnpm install &&  pnpm run build
     tags:
         - v8-runner
     only:
