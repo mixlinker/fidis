@@ -23,7 +23,7 @@ prepare:
             - tags
     artifacts:
         paths:
-            - ../apps/web-ele/dist/
+            - apps/web-ele/dist/
         expire_in: 10 hour
 
 date:
