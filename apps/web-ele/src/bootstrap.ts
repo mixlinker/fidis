@@ -4,7 +4,7 @@ import { registerAccessDirective } from '@vben/access';
 import { initStores } from '@vben/stores';
 
 import 'mixboard/style';
-import 'mixlinker2d/style';
+// import 'mixlinker2d/style';
 
 import 'element-plus/dist/index.css';
 import '@vben/styles';

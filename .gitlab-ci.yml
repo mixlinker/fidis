@@ -1,0 +1,94 @@
+stages:
+    - prepare
+    - before_package
+    - build
+    - test
+    - afert_package
+
+prepare:
+    stage: prepare
+    #stage: build
+    script:
+        - node -v
+        - npm version
+        #- cd ../
+        # - rm -rf v8_mixcomponent
+        #- git clone git@192.168.88.6:fidis/fidis2020/expanded/frontend/v8_mixcomponent.git
+        - npm config set registry https://registry.npmmirror.com/
+        #- npm config set registry https://registry.npmjs.org/
+        #- cd v8_mixcomponent && rm -rf node_modules &&  cnpm cache clean --force && cnpm install
+        - cd ../webview
+        - ls -al
+        - if [ ${CI_COMMIT_TAG} ] ;then sed -i 's/version.*/version=\"'${CI_COMMIT_TAG}'\"/g' public/Version.ini; fi
+        - if [ ${CI_COMMIT_TAG} ] ;then sed -i 's/release.*/release=\"'${DATE}'\"/g' public/Version.ini; fi
+        - rm -rf node_modules &&  npm cache clean --force
+        - npm install &&  npm run build --max-old-space-size=4096 --parallel=8
+    tags:
+        - v8-runner
+    only:
+        refs:
+            - master
+            - tags
+    artifacts:
+        paths:
+            - dist/
+        expire_in: 10 hour
+
+date:
+    stage: before_package
+    script:
+        - DATE=`date '+%Y%m%d%H%M%S'`
+        - echo DATE=${DATE} >> build.env
+        - GIT_TAG_MESSAGE=`git tag -n10000 -l ${CI_COMMIT_TAG} | sed 's/'${CI_COMMIT_TAG}'//'|tr -d '\n\r '`
+        - curl -H "Content-Type:application/json" -H "Data_Type:msg" -X POST --data '{"author":"'"${GITLAB_USER_NAME}"'","appname":"'"webview"'","blockname":"'"webview"'","version":"'"${CI_COMMIT_TAG}.${DATE}"'","description":"'"${GIT_TAG_MESSAGE}"'"}' http://${MIXIOT_MANAGER}/api/setblock
+    only:
+        - tags
+    artifacts:
+        reports:
+            dotenv: build.env
+
+build-master:
+    stage: build
+    #stage: prepare
+    script:
+        - rm -rf .git
+        - docker build --build-arg app=webview --build-arg repository=${DOCKERREPOSITORY_AL} --build-arg php=${PHP_NGINX_AL} -t ${DOCKERREPOSITORY}webview:v8-latest-amd64 .
+        - docker push ${DOCKERREPOSITORY}webview:v8-latest-amd64
+    only:
+        - master
+
+build:
+    stage: build
+    #stage: prepare
+    script:
+        - rm -rf .git
+        - docker buildx build --build-arg app=webview --build-arg repository=${DOCKERREPOSITORY_AL} --build-arg php=${PHP_NGINX_AL} -t ${DOCKERREPOSITORY_AL}webview:${CI_COMMIT_TAG}.${DATE} --platform linux/arm64,linux/amd64 . --push
+    only:
+        - tags  #tag时重新打包更新版本号
+
+package:
+    stage: afert_package
+    script:
+        - ssh root@192.168.88.87 docker pull ${DOCKERREPOSITORY_AL}webview:${CI_COMMIT_TAG}.${DATE}
+        - ssh root@192.168.88.87 "sed -i 's/2020_new\/webview:\.*.*/2020_new\/webview:${CI_COMMIT_TAG}.${DATE}/g'  /etc/kubernetes/mixiot/fidis/webview.yaml"
+        - ssh root@192.168.88.87 kubectl apply -f /etc/kubernetes/mixiot/fidis/webview.yaml
+        - ssh root@192.168.88.87 kubectl delete -f /etc/kubernetes/mixiot/fidis/webview.yaml
+        - ssh root@192.168.88.87 kubectl apply -f /etc/kubernetes/mixiot/fidis/webview.yaml
+    only:
+        refs:
+            - tags
+
+host87:
+    stage: test
+    retry: 2
+    script:
+        - echo ${DOCKERREPOSITORY}webview:v8-latest-amd64
+        - ssh root@192.168.88.86 docker pull ${DOCKERREPOSITORY}webview:v8-latest-amd64
+        - ssh root@192.168.88.86 docker tag ${DOCKERREPOSITORY}webview:v8-latest-amd64 ${DOCKERREPOSITORY}webview:v8-latest
+        - ssh root@192.168.88.86 kubectl apply -f /etc/kubernetes/mixiot/fidis/webview.yaml #解决下一命令删除出现不存在的问题
+        - ssh root@192.168.88.86 kubectl delete -f /etc/kubernetes/mixiot/fidis/webview.yaml
+        - ssh root@192.168.88.86 kubectl apply -f /etc/kubernetes/mixiot/fidis/webview.yaml
+    only:
+        - master
+    dependencies: [ ]
+    cache: { }
