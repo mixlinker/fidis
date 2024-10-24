@@ -13,8 +13,7 @@ prepare:
         - pnpm version
         - pnpm install
         # - npm config set registry https://registry.npmmirror.com/
-        - cd ./apps/web-ele
-        - ls -al
+        # - cd ./apps/web-ele
         - pnpm run build
     tags:
         - v8-runner
