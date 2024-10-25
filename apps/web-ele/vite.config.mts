@@ -6,7 +6,7 @@ export default defineConfig(async () => {
   return {
     application: {},
     vite: {
-      base: '/frontend/',
+      // base: '/frontend/',
       plugins: [
         ElementPlus({
           format: 'esm',
