@@ -1,5 +1,7 @@
 import type { RouteRecordRaw } from 'vue-router';
 
+import { defineAsyncComponent } from 'vue';
+
 import { BasicLayout } from '#/layouts';
 import { $t } from '#/locales';
 
@@ -17,7 +19,9 @@ const routes: RouteRecordRaw[] = [
       {
         name: 'menuList',
         path: '/menulist',
-        component: () => import('#/views/menu/menu/index.vue'),
+        component: defineAsyncComponent(
+          () => import('#/views/menu/menu/index.vue'),
+        ),
         meta: {
           affixTab: false,
           icon: 'lucide:align-start-vertical',
@@ -27,7 +31,9 @@ const routes: RouteRecordRaw[] = [
       {
         name: 'MenuMenuDetail',
         path: '/menuMenuDetail/:id',
-        component: () => import('#/views/menu/menu/detail.vue'),
+        component: defineAsyncComponent(
+          () => import('#/views/menu/menu/detail.vue'),
+        ),
         meta: {
           affixTab: false,
           hideInMenu: true,

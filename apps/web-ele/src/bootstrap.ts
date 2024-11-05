@@ -2,11 +2,6 @@ import { createApp } from 'vue';
 
 import { registerAccessDirective } from '@vben/access';
 import { initStores } from '@vben/stores';
-
-import 'mixboard/style';
-// import 'mixlinker2d/style';
-
-import 'element-plus/dist/index.css';
 import '@vben/styles';
 import '@vben/styles/ele';
 
@@ -21,6 +16,11 @@ import { setupI18n } from '#/locales';
 
 import App from './app.vue';
 import { router } from './router';
+
+import 'mixboard/style';
+import 'mixlinker2d/style';
+
+import 'element-plus/dist/index.css';
 
 async function bootstrap(namespace: string) {
   const app = createApp(App);
