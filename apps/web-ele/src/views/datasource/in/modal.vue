@@ -105,7 +105,7 @@ const [Modal, modalApi] = useVbenModal({
         ? $t('page.company.add-title')
         : $t('page.company.edit-title')
     "
-    class="w-[600px]"
+    class="w-[50%]"
   >
     <el-form
       ref="FormRef"
@@ -114,7 +114,6 @@ const [Modal, modalApi] = useVbenModal({
       :size="formSize"
       label-width="auto"
       status-icon
-      style="max-width: 600px"
     >
       <el-form-item :label="$t('page.company.name')" prop="name">
         <el-input v-model="Form.name" />

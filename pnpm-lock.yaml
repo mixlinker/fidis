@@ -183,6 +183,9 @@ importers:
       '@vueuse/core':
         specifier: ^11.0.3
         version: 11.0.3(vue@3.5.4(typescript@5.6.2))
+      ace-builds:
+        specifier: 1.23.0
+        version: 1.23.0
       dayjs:
         specifier: ^1.11.13
         version: 1.11.13
@@ -193,8 +196,8 @@ importers:
         specifier: ^1.0.6
         version: 1.0.6(ant-design-vue@3.2.20(vue@3.5.4(typescript@5.6.2)))(echarts@5.5.1)(typescript@5.6.2)
       mixlinker2d:
-        specifier: ^1.1.18
-        version: 1.1.18(ant-design-vue@3.2.20(vue@3.5.4(typescript@5.6.2)))(echarts@5.5.1)(typescript@5.6.2)(vue@3.5.4(typescript@5.6.2))
+        specifier: ^1.1.21
+        version: 1.1.21(ant-design-vue@3.2.20(vue@3.5.4(typescript@5.6.2)))(echarts@5.5.1)(typescript@5.6.2)(vue@3.5.4(typescript@5.6.2))
       pinia:
         specifier: 2.2.2
         version: 2.2.2(typescript@5.6.2)(vue@3.5.4(typescript@5.6.2))
@@ -204,6 +207,9 @@ importers:
       vue-router:
         specifier: ^4.4.4
         version: 4.4.4(vue@3.5.4(typescript@5.6.2))
+      vue3-ace-editor:
+        specifier: ^2.2.2
+        version: 2.2.4(ace-builds@1.23.0)(vue@3.5.4(typescript@5.6.2))
     devDependencies:
       unplugin-element-plus:
         specifier: ^0.8.0
@@ -4067,6 +4073,9 @@ packages:
     resolution: {integrity: sha512-h8lQ8tacZYnR3vNQTgibj+tODHI5/+l06Au2Pcriv/Gmet0eaj4TwWH41sO9wnHDiQsEj19q0drzdWdeAHtweg==}
     engines: {node: '>=6.5'}
 
+  ace-builds@1.23.0:
+    resolution: {integrity: sha512-PKRuQaQkjIhg1zeqJPW1QFtJO2fx13Nlv7N/VLhQS/kIQ/2aGAgWvYVcE9X64gbSiLzPdY3jcxv5wJJpLj1gLw==}
+
   acorn-import-attributes@1.9.5:
     resolution: {integrity: sha512-n02Vykv5uA3eHGM/Z2dQrcD56kL8TyDb2p1+0P83PClMnC/nc+anbQRhIOWnSq4Ke/KvDPrY3C9hDtC/A3eHnQ==}
     peerDependencies:
@@ -6860,8 +6869,8 @@ packages:
       ant-design-vue: ^3.2.20
       echarts: ^5.4.3
 
-  mixlinker2d@1.1.18:
-    resolution: {integrity: sha512-jBuh2sj04qO8yt5NtT+GaBbegwbjs9WdIYxwRclGWYQk2kbfsqHpvMaOWkuJWbp2vTm5/YzQUi/MWnzMc755/Q==}
+  mixlinker2d@1.1.21:
+    resolution: {integrity: sha512-YQGB3tpterLHhGdQ17QYDMwwIC4jVeBxQQRaw9EstU+u1fbMvUOnTvev3Lq8Q6IsvULc+AK0RhQN07fOm8vU1A==}
     peerDependencies:
       ant-design-vue: ^3.2.20
       echarts: ^5.5.0
@@ -9225,6 +9234,12 @@ packages:
     resolution: {integrity: sha512-IwUC0Aq2zwaXqy74h4WCvFCUtoV0iSWr0snWnE9TnU18S66GAQyqQbRf2qfJtUuiFsBf6qp0MEwdonlwznlcrw==}
     engines: {node: '>=10.15.0'}
     peerDependencies:
+      vue: 3.5.4
+
+  vue3-ace-editor@2.2.4:
+    resolution: {integrity: sha512-FZkEyfpbH068BwjhMyNROxfEI8135Sc+x8ouxkMdCNkuj/Tuw83VP/gStFQqZHqljyX9/VfMTCdTqtOnJZGN8g==}
+    peerDependencies:
+      ace-builds: '*'
       vue: 3.5.4
 
   vue3-video-play@1.3.2:
@@ -12740,6 +12755,8 @@ snapshots:
     dependencies:
       event-target-shim: 5.0.1
 
+  ace-builds@1.23.0: {}
+
   acorn-import-attributes@1.9.5(acorn@8.12.1):
     dependencies:
       acorn: 8.12.1
@@ -15896,7 +15913,7 @@ snapshots:
       - debug
       - typescript
 
-  mixlinker2d@1.1.18(ant-design-vue@3.2.20(vue@3.5.4(typescript@5.6.2)))(echarts@5.5.1)(typescript@5.6.2)(vue@3.5.4(typescript@5.6.2)):
+  mixlinker2d@1.1.21(ant-design-vue@3.2.20(vue@3.5.4(typescript@5.6.2)))(echarts@5.5.1)(typescript@5.6.2)(vue@3.5.4(typescript@5.6.2)):
     dependencies:
       '@meta2d/activity-diagram': 1.0.1(@meta2d/core@1.0.59)
       '@meta2d/chart-diagram': 1.0.9(@meta2d/core@1.0.59)
@@ -18518,6 +18535,12 @@ snapshots:
   vue-types@3.0.2(vue@3.5.4(typescript@5.6.2)):
     dependencies:
       is-plain-object: 3.0.1
+      vue: 3.5.4(typescript@5.6.2)
+
+  vue3-ace-editor@2.2.4(ace-builds@1.23.0)(vue@3.5.4(typescript@5.6.2)):
+    dependencies:
+      ace-builds: 1.23.0
+      resize-observer-polyfill: 1.5.1
       vue: 3.5.4(typescript@5.6.2)
 
   vue3-video-play@1.3.2(typescript@5.6.2):

@@ -43,13 +43,15 @@
     "@vben/types": "workspace:*",
     "@vben/utils": "workspace:*",
     "@vueuse/core": "^11.0.3",
+    "ace-builds": "1.23.0",
     "dayjs": "^1.11.13",
     "element-plus": "^2.8.2",
     "mixboard": "^1.0.6",
     "mixlinker2d": "^1.1.21",
     "pinia": "2.2.2",
     "vue": "^3.5.4",
-    "vue-router": "^4.4.4"
+    "vue-router": "^4.4.4",
+    "vue3-ace-editor": "^2.2.2"
   },
   "devDependencies": {
     "unplugin-element-plus": "^0.8.0"

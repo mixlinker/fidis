@@ -1,26 +1,22 @@
 <script setup lang="ts">
-import { computed, onMounted, provide, reactive, ref } from 'vue';
+import { onMounted, provide, reactive, ref } from 'vue';
 import { useRouter } from 'vue-router';
 
 import { useVbenModal } from '@vben/common-ui';
 
-import { Plus, Search } from '@element-plus/icons-vue';
-import { useWindowSize } from '@vueuse/core';
 import { ElMessageBox } from 'element-plus';
 
 import { delCompanyApi, getCompanyListApi } from '#/api';
-import mixRightMenu from '#/components/mix-right-menu/index.vue';
+import mixTableList from '#/components/mix-table-list/index.vue';
+import mixTopOperation from '#/components/mix-top-operation/index.vue';
 import { $t } from '#/locales';
 import { createRouterGuard } from '#/router/guard';
 
 import editModal from './modal.vue';
 
 const router = useRouter();
-const { height } = useWindowSize();
-const TableMaxH = computed(() => {
-  return height.value - 234;
-});
-const tableData = ref<any[]>();
+
+const tableData = ref<any[]>([]);
 
 const searchOption = reactive({
   fieldKey: 'name',
@@ -30,21 +26,20 @@ const searchOption = reactive({
   ],
   searchValue: '',
 });
-const page = reactive({
-  currentPage: 1,
-  pageSize: 20,
-  total: 0,
-});
 
 interface ParamType {
   page_index: number;
   page_size: number;
   [key: string]: any;
 }
-
+const page = reactive({
+  current: 1,
+  pageSize: 20,
+  total: 0,
+});
 const getList = async () => {
   const param: ParamType = {
-    page_index: page.currentPage,
+    page_index: page.current,
     page_size: page.pageSize,
   };
   if (searchOption.searchValue) {
@@ -55,20 +50,31 @@ const getList = async () => {
   page.total = result.total_records;
 };
 
-const handleSizeChange = () => {
-  page.currentPage = 1;
-  getList();
-};
-
-const handleCurrentChange = (val: number) => {
-  page.currentPage = val;
+const pageChange = (current: number, size: number) => {
+  page.current = current;
+  page.pageSize = size;
   getList();
 };
 /* 添加和编辑弹窗初始化*/
 const [Modal, modalApi] = useVbenModal({
   connectedComponent: editModal,
 });
-
+const columns = ref([
+  { field: 'name', label: $t('page.company.name') },
+  { field: 'tag', label: $t('common.tag'), type: 'tag' },
+  {
+    field: 'is_active',
+    label: $t('common.status'),
+    option: {
+      0: { label: $t('common.stop'), type: 'danger' },
+      1: { label: $t('common.start'), type: 'primary' },
+    },
+    type: 'status',
+  },
+  { field: 'list_order', label: $t('common.sort') },
+  { field: 'created_at', label: $t('common.created_at') },
+  { field: 'updated_at', label: $t('common.updated_at') },
+]);
 /* 添加 */
 const createModal = () => {
   modalApi.setData('');
@@ -76,7 +82,6 @@ const createModal = () => {
 };
 
 /* 右键菜单 */
-const rightMenuRef = ref<any>(null);
 const rightButton = ref([
   {
     icon: 'Postcard',
@@ -97,7 +102,7 @@ const rightButton = ref([
 
 const rightFunction = {
   delete: (row: any) => {
-    ElMessageBox.confirm($t('message.delete'), {
+    ElMessageBox.confirm($t('common.message.delete'), {
       type: 'warning',
     }).then(async () => {
       await delCompanyApi({ id: row.id });
@@ -111,15 +116,6 @@ const rightFunction = {
     modalApi.setData(row);
     modalApi.open();
   },
-};
-
-type RightFunctionType = keyof typeof rightFunction;
-const rowContextmenu = (row: any) => {
-  rightMenuRef.value.showRightMenu(row);
-};
-
-const rightClick = (data: { row: any; type: RightFunctionType }) => {
-  rightFunction[data.type](data.row);
 };
 
 onMounted(() => {
@@ -139,100 +135,18 @@ onMounted(() => {
 });
 
 provide('getList', getList);
+defineExpose({ createModal, pageChange, rightFunction });
 </script>
 
 <template>
   <div class="p-3">
-    <div class="mb-3">
-      <el-select
-        v-model="searchOption.fieldKey"
-        class="mr-[12px]"
-        style="width: 120px"
-      >
-        <el-option
-          v-for="item in searchOption.option"
-          :key="item.value"
-          :label="item.label"
-          :value="item.value"
-        />
-      </el-select>
-      <el-input
-        v-model="searchOption.searchValue"
-        :placeholder="$t('common.pleaseEnter')"
-        class="mr-[12px]"
-        clearable
-        style="width: 240px"
-        @keyup.enter="getList"
-      />
-      <el-button :icon="Search" @click="getList">
-        {{ $t('common.search') }}
-      </el-button>
-      <el-button :icon="Plus" type="primary" @click="createModal">
-        {{ $t('common.add') }}
-      </el-button>
-    </div>
-    <el-table
-      :data="tableData"
-      :max-height="TableMaxH"
-      :style="{ height: `${TableMaxH}px` }"
-      border
-      style="width: 100%"
-      @row-contextmenu="rowContextmenu"
-    >
-      <el-table-column :label="$t('page.company.name')" prop="name" />
-      <el-table-column :label="$t('common.tag')" prop="tag">
-        <template #default="scope">
-          <el-tag
-            v-for="(item, index) in scope.row.tag"
-            :key="index"
-            class="mr-1"
-            type="primary"
-          >
-            {{ item }}
-          </el-tag>
-        </template>
-      </el-table-column>
-      <el-table-column :label="$t('common.status')" prop="is_active">
-        <template #default="scope">
-          <div>
-            {{
-              scope.row.is_active === 1 ? $t('common.start') : $t('common.stop')
-            }}
-          </div>
-        </template>
-      </el-table-column>
-      <el-table-column :label="$t('common.sort')" prop="list_order" />
-      <el-table-column
-        :label="$t('common.description')"
-        prop="description"
-        show-overflow-tooltip
-      />
-      <el-table-column :label="$t('common.created_at')" prop="created_at" />
-      <el-table-column :label="$t('common.updated_at')" prop="updated_at" />
-    </el-table>
-    <mixRightMenu
-      ref="rightMenuRef"
+    <mixTopOperation :search-option="searchOption" />
+    <mixTableList
+      :columns="columns"
       :local-buttons="rightButton"
-      @right-click="rightClick"
+      :pager="page"
+      :table-data="tableData"
     />
-    <div class="mt-[12px] flex justify-end">
-      <el-pagination
-        v-model:current-page="page.currentPage"
-        v-model:page-size="page.pageSize"
-        :page-sizes="[20, 50, 100, 200]"
-        :total="page.total"
-        layout="total,prev, pager, next, sizes,jumper"
-        @current-change="handleCurrentChange"
-        @size-change="handleSizeChange"
-      />
-    </div>
-
     <Modal />
   </div>
 </template>
-
-<style scoped>
-.el-table {
-  /* border: 0.5px solid #babfc7; */
-}
-</style>

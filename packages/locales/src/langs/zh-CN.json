@@ -58,10 +58,21 @@
     "man": "男",
     "women": "女",
     "password": "密码",
-    "object_uid": "对象编号"
+    "object_uid": "对象编号",
+    "batch_upgrade": "批量升级",
+    "download": "下载",
+    "upgrade": "升级",
+    "reload": "重启",
+    "success": "成功",
+    "in_execution": "执行中",
+    "failing": "失败",
+    "watting": "等待中",
+    "export": "导出"
   },
   "message": {
-    "delete": "确认删除?"
+    "delete": "确认删除?",
+    "delete_success": "删除成功",
+    "copy": "复制成功"
   },
   "fallback": {
     "pageNotFound": "哎呀！未找到页面",
@@ -85,7 +96,8 @@
     }
   },
   "formRules": {
-    "required": "请输入{0}"
+    "required": "请输入{0}",
+    "time_range": "请选择时间范围"
   },
   "widgets": {
     "document": "文档",
@@ -347,5 +359,16 @@
       "sidebarToggle": "启用侧边栏切换",
       "lockScreen": "启用锁屏"
     }
+  },
+  "placeholder": {
+    "select": "请选择",
+    "input": "请输入"
+  },
+  "addition": {
+    "info": "扩展信息"
+  },
+  "script": {
+    "copy": "复制脚本",
+    "view": "查看脚本"
   }
 }

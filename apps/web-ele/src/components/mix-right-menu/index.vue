@@ -54,7 +54,7 @@ defineExpose({ showRightMenu });
     <ul
       v-show="rightMenu.visible"
       :style="{ left: `${rightMenu.left}px`, top: `${rightMenu.top}px` }"
-      class="contextmenu"
+      class="contextmenu bg-background text-foreground"
     >
       <li
         v-for="(item, index) in localButtons"
@@ -79,11 +79,9 @@ defineExpose({ showRightMenu });
   margin: 0;
   font-size: 14px;
   font-weight: 400;
-  color: #262626;
   list-style-type: none;
-  background: #fff;
   border-radius: 4px;
-  box-shadow: 2px 2px 3px 0 rgb(0 0 0 / 30%);
+  box-shadow: 0 2px 15px 0 rgb(0 0 0 / 30%);
 
   li {
     display: flex;
@@ -99,7 +97,7 @@ defineExpose({ showRightMenu });
     }
 
     &:hover {
-      background: #eee;
+      background: hsl(var(--accent-hover));
     }
 
     .anticon,

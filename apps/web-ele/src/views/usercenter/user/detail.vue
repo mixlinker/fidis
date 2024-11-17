@@ -55,8 +55,8 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div class="m-3 h-full bg-white">
-    <div class="p-2">
+  <div class="bg-background m-3 h-full">
+    <div class="p-[12px]">
       <el-descriptions :title="$t('common.base-info')" border>
         <el-descriptions-item :label="$t('page.user.name')">
           {{ detailData?.name }}

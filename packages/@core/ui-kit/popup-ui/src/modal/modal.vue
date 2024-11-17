@@ -214,7 +214,7 @@ function pointerDownOutside(e: Event) {
       <div
         ref="wrapperRef"
         :class="
-          cn('relative min-h-40 flex-1 overflow-y-auto p-3', contentClass, {
+          cn('relative min-h-40 flex-1 overflow-y-auto p-5', contentClass, {
             'overflow-hidden': showLoading,
           })
         "

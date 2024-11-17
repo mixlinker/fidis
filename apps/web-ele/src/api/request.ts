@@ -72,11 +72,11 @@ function createRequestClient(baseURL: string) {
     fulfilled: (response) => {
       const { data: responseData, status } = response;
 
-      const { code, msg, result } = responseData;
+      const { code, info, msg, result } = responseData;
       if (status >= 200 && status < 400 && code === 200) {
-        return result;
+        return result || responseData;
       } else {
-        console.error(msg);
+        ElMessage.error(info || msg);
       }
     },
   });

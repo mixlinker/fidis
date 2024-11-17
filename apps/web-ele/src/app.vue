@@ -36,4 +36,8 @@ h4,
 h5 {
   color: unset !important;
 }
+
+ol {
+  margin-bottom: 0 !important;
+}
 </style>

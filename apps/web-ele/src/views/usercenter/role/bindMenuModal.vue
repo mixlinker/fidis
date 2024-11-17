@@ -77,14 +77,13 @@ const [Modal, modalApi] = useVbenModal({
 </script>
 
 <template>
-  <Modal :title="$t('page.role.bind-menu-title')" class="w-[600px]">
+  <Modal :title="$t('page.role.bind-menu-title')" class="w-[50%]">
     <el-form
       ref="FormRef"
       :model="Form"
       :size="formSize"
       label-width="auto"
       status-icon
-      style="max-width: 600px"
     >
       <el-form-item :label="$t('page.role.menu')" prop="name">
         <el-select v-model="Form.menu_id_list" multiple>

@@ -166,6 +166,58 @@ async function generateAccess(options: GenerateMenuAndRoutesOptions) {
             },
           ],
         },
+        {
+          component: 'BasicLayout',
+          meta: {
+            icon: 'lucide:radio-tower',
+            order: 4,
+            title: 'terminal.title',
+          },
+          name: 'terminal',
+          path: '/terminal',
+          children: [
+            {
+              name: 'terminalManager',
+              path: '/terminalManager',
+              component: '/terminal/manager/index.vue',
+              meta: {
+                affixTab: false,
+                icon: 'lucide:layout-list',
+                title: 'terminal.terminal.title',
+              },
+            },
+            {
+              name: 'terminalDetail',
+              path: '/terminalDetail/:id',
+              component: '/terminal/manager/detail.vue',
+              meta: {
+                affixTab: false,
+                hideInMenu: true,
+                title: 'terminal.terminal.detail',
+              },
+            },
+            {
+              name: 'terminalConfig',
+              path: '/terminalConfig',
+              component: '/terminal/config/index.vue',
+              meta: {
+                affixTab: false,
+                icon: 'lucide:file-sliders',
+                title: 'terminal.config.title',
+              },
+            },
+            {
+              name: 'terminalConfigDetail',
+              path: '/terminalConfigDetail/:id',
+              component: '/terminal/config/detail.vue',
+              meta: {
+                affixTab: false,
+                hideInMenu: true,
+                title: 'terminal.config.detail',
+              },
+            },
+          ],
+        },
       ];
       const result = await getUserMenuApi();
       result.forEach((item) => {
