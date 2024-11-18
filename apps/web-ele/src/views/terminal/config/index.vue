@@ -119,7 +119,7 @@ const commands = ref([
   },
 ]);
 
-/* 右键菜单 */
+/* 右键菜单相关 */
 const batchRef = ref<any>();
 const rightButton = ref([
   {
