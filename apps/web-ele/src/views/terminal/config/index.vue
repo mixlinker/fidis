@@ -12,6 +12,7 @@ import mixTopOperation from '#/components/mix-top-operation/index.vue';
 import { $t } from '#/locales';
 import config from '#/utils/config';
 
+import batchModal from './batch-modal.vue';
 import editModal from './modal.vue';
 
 const router = useRouter();
@@ -119,6 +120,7 @@ const commands = ref([
 ]);
 
 /* 右键菜单 */
+const batchRef = ref<any>();
 const rightButton = ref([
   {
     icon: 'Postcard',
@@ -148,6 +150,10 @@ const rightButton = ref([
 ]);
 
 const rightFunction = {
+  batch_upgrade: (row: any) => {
+    batchRef.value.modal.config_id = row.uid;
+    batchRef.value.modalApi.open();
+  },
   delete: (row: any) => {
     ElMessageBox.confirm($t('message.delete'), {
       type: 'warning',
@@ -204,5 +210,6 @@ defineExpose({ createModal, pageChange, rightFunction, search });
       :table-data="tableData"
     />
     <Modal />
+    <batchModal ref="batchRef" />
   </div>
 </template>

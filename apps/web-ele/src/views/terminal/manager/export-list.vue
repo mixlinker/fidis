@@ -68,8 +68,10 @@ const getList = async () => {
     ];
   }
   const result = await getExportListApi(param);
-  tableData.value = result.data;
-  page.total = result.total_records;
+  if (result) {
+    tableData.value = result.data;
+    page.total = result.total_records;
+  }
 };
 
 const pageChange = (current: number, size: number) => {

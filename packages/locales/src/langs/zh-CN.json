@@ -67,7 +67,8 @@
     "in_execution": "执行中",
     "failing": "失败",
     "watting": "等待中",
-    "export": "导出"
+    "export": "导出",
+    "select_all": "选择所有"
   },
   "message": {
     "delete": "确认删除?",

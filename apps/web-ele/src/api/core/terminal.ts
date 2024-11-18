@@ -149,3 +149,15 @@ export async function getTerminalConfigItemApi(data: {
   data.action = 'get_terminal_config_item';
   return requestClient.post<any>('/proxy/api', data);
 }
+/**
+ * 升级终端
+ */
+export async function upgradeLuaApi(data: {
+  [key: string]: any;
+  terminal_group: string[];
+  uid: string;
+  value: string;
+}) {
+  data.action = 'update_lua';
+  return requestClient.post<any>('/proxy/api', data);
+}

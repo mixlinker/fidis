@@ -75,7 +75,7 @@ defineExpose({ handleExport });
     <recordList v-if="tab === 'record'" />
     <exportList v-if="tab === 'export'" />
   </div>
-  <Modal :centered="true" :title="$t('common.export')" class="w-[50%]">
+  <Modal :centered="true" :title="$t('common.export')" class="w-[600px]">
     <el-form
       ref="FormRef"
       :model="Form"
