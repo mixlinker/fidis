@@ -16,7 +16,7 @@ prepare:
         # - cd ./apps/web-ele
         - pnpm run build
     tags:
-        - tongwei-runner
+        - v8-runner
     only:
         refs:
             - master
