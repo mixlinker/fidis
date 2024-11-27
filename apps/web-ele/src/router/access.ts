@@ -218,6 +218,48 @@ async function generateAccess(options: GenerateMenuAndRoutesOptions) {
             },
           ],
         },
+        // {
+        //   component: 'BasicLayout',
+        //   meta: {
+        //     icon: 'lucide:list-todo',
+        //     order: 4,
+        //     title: 'report.title',
+        //   },
+        //   name: 'report',
+        //   path: '/report',
+        //   children: [
+        //     {
+        //       name: 'reportProject',
+        //       path: '/reportProject',
+        //       component: '/report/project/index.vue',
+        //       meta: {
+        //         affixTab: false,
+        //         icon: 'lucide:file-archive',
+        //         title: 'report.project.title',
+        //       },
+        //     },
+        //     {
+        //       name: 'reportDetail',
+        //       path: '/reportDetail/:id',
+        //       component: '/report/project/detail.vue',
+        //       meta: {
+        //         affixTab: false,
+        //         hideInMenu: true,
+        //         title: 'report.project.detail',
+        //       },
+        //     },
+        //     {
+        //       name: 'reportResult',
+        //       path: '/reportResult',
+        //       component: '/report/result/index.vue',
+        //       meta: {
+        //         affixTab: false,
+        //         icon: 'lucide:file-output',
+        //         title: 'report.result.title',
+        //       },
+        //     },
+        //   ],
+        // },
       ];
       const result = await getUserMenuApi();
       result.forEach((item) => {

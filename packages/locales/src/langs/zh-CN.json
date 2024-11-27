@@ -68,7 +68,16 @@
     "failing": "失败",
     "watting": "等待中",
     "export": "导出",
-    "select_all": "选择所有"
+    "select_all": "选择所有",
+    "close": "关闭",
+    "open": "开启",
+    "month": "月",
+    "date": "日",
+    "hour": "时",
+    "minute": "分",
+    "handle_start": "启动",
+    "handle_stop": "停止",
+    "handle_run": "手动执行"
   },
   "message": {
     "delete": "确认删除?",

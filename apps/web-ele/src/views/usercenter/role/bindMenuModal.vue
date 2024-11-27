@@ -77,7 +77,11 @@ const [Modal, modalApi] = useVbenModal({
 </script>
 
 <template>
-  <Modal :title="$t('page.role.bind-menu-title')" class="w-[50%]">
+  <Modal
+    :centered="true"
+    :title="$t('page.role.bind-menu-title')"
+    class="w-[50%]"
+  >
     <el-form
       ref="FormRef"
       :model="Form"

@@ -62,7 +62,7 @@ const Form = ref<RuleForm>({
 const rules = reactive<FormRules<RuleForm>>({
   name: [
     {
-      message: $t('page.company.message.name'),
+      message: $t('terminal.terminal.please_enter_name'),
       required: true,
       trigger: 'blur',
     },

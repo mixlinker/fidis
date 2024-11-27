@@ -255,5 +255,47 @@
       "base64": "上报图片",
       "range": "时间范围"
     }
+  },
+  "report": {
+    "title": "报表管理",
+    "project": {
+      "title": "报表项目",
+      "uid": "项目编号",
+      "alias": "项目别名",
+      "name": "项目名称",
+      "status": "项目状态",
+      "file_name": "报表名称",
+      "add": "添加项目",
+      "edit": "编辑项目",
+      "tpl_add": "模板添加",
+      "report_type": "报表类型",
+      "run_mode": "执行方式",
+      "hand_run": "手动执行",
+      "auto_run": "自动执行",
+      "time_task": "定时任务",
+      "output_type": "输出方式",
+      "excel_script": "报表脚本",
+      "tableman_script": "tableman脚本",
+      "run_period": "执行周期",
+      "focus_users": "关注用户",
+      "year_report": "年报表",
+      "month_report": "月报表",
+      "date_report": "日报表",
+      "classes_report": "班次报表",
+      "other_report": "其他报表",
+      "per_year": "按年",
+      "per_month": "按月",
+      "per_date": "按天",
+      "per_hour": "按时",
+      "please_upload_template": "请上传模板"
+    },
+    "result": {
+      "title": "报表结果",
+      "uid": "结果编号",
+      "name": "结果名称",
+      "type": "报表类型",
+      "number": "任务编号",
+      "status": "任务状态"
+    }
   }
 }

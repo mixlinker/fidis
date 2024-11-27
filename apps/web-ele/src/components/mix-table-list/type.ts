@@ -17,4 +17,9 @@ type pageType = {
   total: number;
 };
 
-export type { buttonType, columnType, pageType };
+type columnStorageType = {
+  field: string;
+  width: number;
+};
+
+export type { buttonType, columnStorageType, columnType, pageType };

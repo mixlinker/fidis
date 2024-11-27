@@ -10,6 +10,7 @@ import {
   editTerminalConfigApi,
   getTerminalConfigItemApi,
 } from '#/api';
+import mixAceEditor from '#/components/mix-ace-editor/index.vue';
 import mixDynamisTags from '#/components/mix-dynamic-tag/index.vue';
 import { $t } from '#/locales';
 
@@ -33,16 +34,9 @@ const Form = ref<RuleForm>({
   uid: '',
 });
 const rules = reactive<FormRules<RuleForm>>({
-  list_order: [
-    {
-      message: $t('page.company.message.list_order'),
-      required: true,
-      trigger: 'blur',
-    },
-  ],
   name: [
     {
-      message: $t('page.company.message.name'),
+      message: $t('terminal.config.please_enter_name'),
       required: true,
       trigger: 'blur',
     },
@@ -81,6 +75,13 @@ const [Modal, modalApi] = useVbenModal({
         }
         Form.value = { ...newData };
         Form.value.tag = [...data.tag];
+        if (Form.value.addition) {
+          Form.value.addition = JSON.stringify(
+            JSON.parse(Form.value.addition),
+            null,
+            2,
+          );
+        }
       } else {
         modalType.value = 'add';
       }
@@ -125,7 +126,7 @@ const [Modal, modalApi] = useVbenModal({
           <el-form-item
             :label="$t('terminal.config.name')"
             has-feedback
-            name="name"
+            prop="name"
           >
             <el-input v-model="Form.name" type="text" />
           </el-form-item>
@@ -143,22 +144,19 @@ const [Modal, modalApi] = useVbenModal({
         :label="$t('terminal.config.terminal_script')"
         prop="terminal_script"
       >
-        <el-input v-model="Form.terminal_script" :rows="6" type="textarea" />
+        <!-- <el-input v-model="Form.terminal_script" :rows="6" type="textarea" /> -->
+        <mixAceEditor v-model:script="Form.terminal_script" mode="lua" />
       </el-form-item>
       <el-form-item
         :label="$t('terminal.config.config_script')"
         prop="config_script"
       >
-        <el-input v-model="Form.config_script" :rows="6" type="textarea" />
-      </el-form-item>
-      <el-form-item
-        :label="$t('terminal.config.config_script')"
-        prop="config_script"
-      >
-        <el-input v-model="Form.config_script" :rows="4" type="textarea" />
+        <!-- <el-input v-model="Form.config_script" :rows="4" type="textarea" /> -->
+        <mixAceEditor v-model:script="Form.config_script" mode="lua" />
       </el-form-item>
       <el-form-item :label="$t('addition.info')" prop="addition">
-        <el-input v-model="Form.addition" :rows="4" type="textarea" />
+        <!-- <el-input v-model="Form.addition" :rows="4" type="textarea" /> -->
+        <mixAceEditor v-model:script="Form.addition" />
       </el-form-item>
       <el-form-item :label="$t('common.description')" prop="description">
         <el-input v-model="Form.description" :rows="4" type="textarea" />

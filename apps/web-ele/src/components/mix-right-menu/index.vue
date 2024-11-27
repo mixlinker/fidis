@@ -15,7 +15,7 @@ interface Props {
 const props = withDefaults(defineProps<Props>(), {});
 const emit = defineEmits(['rightClick']);
 
-const record = ref({});
+const record: { [key: string]: any } = ref({});
 const rightMenu = reactive({
   left: 0,
   top: 0,
@@ -46,6 +46,23 @@ const operationClick = (type: string) => {
   });
 };
 
+const getDisplay = (item: buttonType) => {
+  let result = true;
+  if (
+    ['handle_stop', 'stop'].includes(item.type) &&
+    record.value?.is_active === 0
+  ) {
+    result = false;
+  }
+  if (
+    ['handle_start', 'start'].includes(item.type) &&
+    record.value?.is_active === 1
+  ) {
+    result = false;
+  }
+  return result;
+};
+
 defineExpose({ showRightMenu });
 </script>
 
@@ -56,16 +73,14 @@ defineExpose({ showRightMenu });
       :style="{ left: `${rightMenu.left}px`, top: `${rightMenu.top}px` }"
       class="contextmenu bg-background text-foreground"
     >
-      <li
-        v-for="(item, index) in localButtons"
-        :key="index"
-        @click="operationClick(item.type)"
-      >
-        <el-icon :size="18" class="mr-2">
-          <component :is="item.icon" />
-        </el-icon>
-        {{ item.name }}
-      </li>
+      <template v-for="(item, index) in localButtons" :key="index">
+        <li v-if="getDisplay(item)" @click="operationClick(item.type)">
+          <el-icon :size="18" class="mr-2">
+            <component :is="item.icon" />
+          </el-icon>
+          {{ item.name }}
+        </li>
+      </template>
     </ul>
   </div>
 </template>

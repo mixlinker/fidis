@@ -14,18 +14,17 @@ class FileUploader {
     file: Blob | File,
     config?: AxiosRequestConfig,
   ): Promise<AxiosResponse> {
-    const formData = new FormData();
-    formData.append('file', file);
-
+    // const formData = new FormData();
+    // formData.append('file', file);
     const finalConfig: AxiosRequestConfig = {
       ...config,
       headers: {
-        'Content-Type': 'multipart/form-data',
+        'Content-Type': 'application/x-www-form-urlencoded',
         ...config?.headers,
       },
     };
 
-    return this.client.post(url, formData, finalConfig);
+    return this.client.post(url, file, finalConfig);
   }
 }
 

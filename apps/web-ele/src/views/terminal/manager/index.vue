@@ -257,17 +257,22 @@ onMounted(() => {
 });
 
 provide('getList', getList);
-defineExpose({ createModal, pageChange, rightFunction, search });
+defineExpose({ createModal, pageChange, rightFunction });
 </script>
 
 <template>
   <div class="p-3">
-    <mixTopOperation :command="commands" :search-option="searchOption" />
+    <mixTopOperation
+      :command="commands"
+      :search-option="searchOption"
+      @search="search"
+    />
     <mixTableList
       :columns="columns"
       :local-buttons="rightButton"
       :pager="page"
       :table-data="tableData"
+      list-name="terminal_manager_list"
     />
     <Modal />
   </div>

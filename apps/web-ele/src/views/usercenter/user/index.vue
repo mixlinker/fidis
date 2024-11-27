@@ -1,26 +1,21 @@
 <script setup lang="ts">
-import { computed, onMounted, provide, reactive, ref } from 'vue';
+import { onMounted, provide, reactive, ref } from 'vue';
 import { useRouter } from 'vue-router';
 
 import { useVbenModal } from '@vben/common-ui';
 
-import { Plus, Search } from '@element-plus/icons-vue';
-import { useWindowSize } from '@vueuse/core';
 import { ElMessageBox } from 'element-plus';
 
 import { delUserApi, getUserListApi } from '#/api';
-import mixRightMenu from '#/components/mix-right-menu/index.vue';
+import mixTableList from '#/components/mix-table-list/index.vue';
+import mixTopOperation from '#/components/mix-top-operation/index.vue';
 import { $t } from '#/locales';
 
 import dataModal from './bindDataModal.vue';
 import editModal from './modal.vue';
 
 const router = useRouter();
-const { height } = useWindowSize();
-const TableMaxH = computed(() => {
-  return height.value - 234;
-});
-const tableData = ref<any[]>();
+const tableData = ref<any[]>([]);
 
 const searchOption = reactive({
   fieldKey: 'name',
@@ -31,11 +26,31 @@ const searchOption = reactive({
   searchValue: '',
 });
 const page = reactive({
-  currentPage: 1,
+  current: 1,
   pageSize: 20,
   total: 0,
 });
-
+const columns = ref([
+  { field: 'name', label: $t('page.user.name'), width: 160 },
+  { field: 'alias', label: $t('page.user.alias'), width: 160 },
+  { field: 'tag', label: $t('common.tag'), type: 'tag', width: 160 },
+  {
+    field: 'is_active',
+    label: $t('common.status'),
+    option: {
+      0: { label: $t('common.stop'), type: 'danger' },
+      1: { label: $t('common.start'), type: 'primary' },
+    },
+    type: 'status',
+    width: 160,
+  },
+  { field: 'email', label: $t('common.email'), width: 160 },
+  { field: 'mobile', label: $t('common.mobile'), width: 160 },
+  { field: 'gender', label: $t('common.gender'), width: 160 },
+  { field: 'description', label: $t('common.description'), width: 240 },
+  { field: 'created_at', label: $t('common.created_at'), width: 180 },
+  { field: 'updated_at', label: $t('common.updated_at'), width: 180 },
+]);
 interface ParamType {
   page_index: number;
   page_size: number;
@@ -44,7 +59,7 @@ interface ParamType {
 
 const getList = async () => {
   const param: ParamType = {
-    page_index: page.currentPage,
+    page_index: page.current,
     page_size: page.pageSize,
   };
   if (searchOption.searchValue) {
@@ -55,13 +70,13 @@ const getList = async () => {
   page.total = result.total_records;
 };
 
-const handleSizeChange = () => {
-  page.currentPage = 1;
+const pageChange = (current: number, size: number) => {
+  page.current = current;
+  page.pageSize = size;
   getList();
 };
-
-const handleCurrentChange = (val: number) => {
-  page.currentPage = val;
+const search = () => {
+  page.current = 1;
   getList();
 };
 
@@ -82,7 +97,6 @@ const createModal = () => {
 };
 
 /* 右键菜单 */
-const rightMenuRef = ref<any>(null);
 const rightButton = ref([
   {
     icon: 'Postcard',
@@ -127,111 +141,33 @@ const rightFunction = {
     modalApi.open();
   },
 };
-
-type RightFunctionType = keyof typeof rightFunction;
-const rowContextmenu = (row: any) => {
-  rightMenuRef.value.showRightMenu(row);
-};
-
-const rightClick = (data: { row: any; type: RightFunctionType }) => {
-  rightFunction[data.type](data.row);
-};
-
+const commands = ref([
+  {
+    type: 'create',
+  },
+]);
 onMounted(() => {
   getList();
 });
 
 provide('getList', getList);
+defineExpose({ createModal, pageChange, rightFunction });
 </script>
 
 <template>
   <div class="p-3">
-    <div class="mb-3">
-      <el-select
-        v-model="searchOption.fieldKey"
-        class="mr-[12px]"
-        style="width: 120px"
-      >
-        <el-option
-          v-for="item in searchOption.option"
-          :key="item.value"
-          :label="item.label"
-          :value="item.value"
-        />
-      </el-select>
-      <el-input
-        v-model="searchOption.searchValue"
-        :placeholder="$t('common.pleaseEnter')"
-        class="mr-[12px]"
-        clearable
-        style="width: 240px"
-        @keyup.enter="getList"
-      />
-      <el-button :icon="Search" @click="getList">
-        {{ $t('common.search') }}
-      </el-button>
-      <el-button :icon="Plus" type="primary" @click="createModal">
-        {{ $t('common.add') }}
-      </el-button>
-    </div>
-    <el-table
-      :data="tableData"
-      :max-height="TableMaxH"
-      :style="{ height: `${TableMaxH}px` }"
-      border
-      style="width: 100%"
-      @row-contextmenu="rowContextmenu"
-    >
-      <el-table-column :label="$t('page.user.name')" prop="name" />
-      <el-table-column :label="$t('page.user.alias')" prop="alias" />
-      <el-table-column :label="$t('common.tag')" prop="tag">
-        <template #default="scope">
-          <el-tag
-            v-for="(item, index) in scope.row.tag"
-            :key="index"
-            class="mr-1"
-            type="primary"
-          >
-            {{ item }}
-          </el-tag>
-        </template>
-      </el-table-column>
-      <el-table-column :label="$t('common.status')" prop="is_active">
-        <template #default="scope">
-          <div>
-            {{
-              scope.row.is_active === 1 ? $t('common.start') : $t('common.stop')
-            }}
-          </div>
-        </template>
-      </el-table-column>
-      <el-table-column :label="$t('common.email')" prop="email" />
-      <el-table-column :label="$t('common.mobile')" prop="mobile" />
-      <el-table-column :label="$t('common.gender')" prop="gender" />
-      <el-table-column
-        :label="$t('common.description')"
-        prop="description"
-        show-overflow-tooltip
-      />
-      <el-table-column :label="$t('common.updated_at')" prop="updated_at" />
-    </el-table>
-    <mixRightMenu
-      ref="rightMenuRef"
-      :local-buttons="rightButton"
-      @right-click="rightClick"
+    <mixTopOperation
+      :command="commands"
+      :search-option="searchOption"
+      @search="search"
     />
-    <div class="mt-[12px] flex justify-end">
-      <el-pagination
-        v-model:current-page="page.currentPage"
-        v-model:page-size="page.pageSize"
-        :page-sizes="[20, 50, 100, 200]"
-        :total="page.total"
-        layout="total,prev, pager, next, sizes,jumper"
-        @current-change="handleCurrentChange"
-        @size-change="handleSizeChange"
-      />
-    </div>
-
+    <mixTableList
+      :columns="columns"
+      :local-buttons="rightButton"
+      :pager="page"
+      :table-data="tableData"
+      list-name="user_list"
+    />
     <Modal />
     <DataModal />
   </div>

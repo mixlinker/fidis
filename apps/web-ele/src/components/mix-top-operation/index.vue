@@ -12,6 +12,8 @@ interface Props {
   searchOption: optionType;
 }
 const props = withDefaults(defineProps<Props>(), {});
+
+const emit = defineEmits(['search']);
 const commands = defineModel<{ type: string }[]>('command');
 
 const { proxy } = getCurrentInstance() as any;
@@ -33,7 +35,7 @@ const buttons: btnType = {
 const { fieldKey, searchValue } = toRefs(props.searchOption);
 
 const search = () => {
-  proxy.$parent.search();
+  emit('search');
 };
 
 const handleFunc = (type: string) => {

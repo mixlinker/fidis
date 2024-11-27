@@ -2,16 +2,12 @@
 import { onMounted, provide, reactive, ref } from 'vue';
 import { useRouter } from 'vue-router';
 
-import { useVbenModal } from '@vben/common-ui';
-
 import { ElMessageBox } from 'element-plus';
 
-import { delMenuApi, getMenuListApi } from '#/api';
+import { delReportApi, getMenuListApi } from '#/api';
 import mixTableList from '#/components/mix-table-list/index.vue';
 import mixTopOperation from '#/components/mix-top-operation/index.vue';
 import { $t } from '#/locales';
-
-import editModal from './modal.vue';
 
 const router = useRouter();
 const tableData = ref<any[]>([]);
@@ -54,26 +50,13 @@ const pageChange = (current: number, size: number) => {
   page.pageSize = size;
   getList();
 };
-const search = () => {
-  page.current = 1;
-  getList();
-};
-/* 添加和编辑弹窗初始化*/
-const [Modal, modalApi] = useVbenModal({
-  connectedComponent: editModal,
-});
 
-/* 添加 */
-const createModal = () => {
-  modalApi.setData('');
-  modalApi.open();
-};
 const columns = ref([
-  { field: 'name', label: $t('page.company.name'), width: 180 },
-  { field: 'tag', label: $t('common.tag'), type: 'tag', width: 180 },
-  { field: 'list_order', label: $t('common.sort'), width: 180 },
-  { field: 'created_at', label: $t('common.created_at'), width: 180 },
-  { field: 'updated_at', label: $t('common.updated_at'), width: 180 },
+  { field: 'name', label: $t('page.company.name') },
+  { field: 'tag', label: $t('common.tag'), type: 'tag' },
+  { field: 'list_order', label: $t('common.sort') },
+  { field: 'created_at', label: $t('common.created_at') },
+  { field: 'updated_at', label: $t('common.updated_at') },
 ]);
 /* 右键菜单 */
 const rightButton = ref([
@@ -99,44 +82,31 @@ const rightFunction = {
     ElMessageBox.confirm($t('message.delete'), {
       type: 'warning',
     }).then(async () => {
-      await delMenuApi({ id: row.id });
+      await delReportApi({ id: row.id });
       getList();
     });
   },
   item: (row: any) => {
-    router.push(`/menuMenuDetail/${row.id}`);
-  },
-  update: async (row: any) => {
-    modalApi.setData(row);
-    modalApi.open();
+    router.push(`/reportDetail/${row.id}`);
   },
 };
-const commands = ref([
-  {
-    type: 'create',
-  },
-]);
 onMounted(() => {
   getList();
 });
 
 provide('getList', getList);
-defineExpose({ createModal, pageChange, rightFunction });
+defineExpose({ pageChange, rightFunction });
 </script>
 
 <template>
   <div class="p-3">
-    <mixTopOperation
-      :command="commands"
-      :search-option="searchOption"
-      @search="search"
-    />
+    <mixTopOperation :search-option="searchOption" />
     <mixTableList
       :columns="columns"
       :local-buttons="rightButton"
       :pager="page"
       :table-data="tableData"
-      list-name="menu_list"
+      list-name="report_result_list"
     />
     <Modal />
   </div>

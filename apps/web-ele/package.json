@@ -42,6 +42,7 @@
     "@vben/styles": "workspace:*",
     "@vben/types": "workspace:*",
     "@vben/utils": "workspace:*",
+    "@vueuse/components": "^11.3.0",
     "@vueuse/core": "^11.0.3",
     "ace-builds": "1.23.0",
     "dayjs": "^1.11.13",

@@ -94,6 +94,7 @@ const columns = ref([
   {
     field: 'description',
     label: $t('common.description'),
+    width: 180,
   },
   {
     field: 'last_modified',
@@ -202,12 +203,17 @@ defineExpose({ createModal, pageChange, rightFunction, search });
 
 <template>
   <div class="p-3">
-    <mixTopOperation :command="commands" :search-option="searchOption" />
+    <mixTopOperation
+      :command="commands"
+      :search-option="searchOption"
+      @search="search"
+    />
     <mixTableList
       :columns="columns"
       :local-buttons="rightButton"
       :pager="page"
       :table-data="tableData"
+      list-name="terminal_config_list"
     />
     <Modal />
     <batchModal ref="batchRef" />

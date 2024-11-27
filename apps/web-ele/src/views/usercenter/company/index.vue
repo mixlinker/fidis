@@ -55,13 +55,18 @@ const pageChange = (current: number, size: number) => {
   page.pageSize = size;
   getList();
 };
+
+const search = () => {
+  page.current = 1;
+  getList();
+};
 /* 添加和编辑弹窗初始化*/
 const [Modal, modalApi] = useVbenModal({
   connectedComponent: editModal,
 });
 const columns = ref([
-  { field: 'name', label: $t('page.company.name') },
-  { field: 'tag', label: $t('common.tag'), type: 'tag' },
+  { field: 'name', label: $t('page.company.name'), width: 160 },
+  { field: 'tag', label: $t('common.tag'), type: 'tag', width: 160 },
   {
     field: 'is_active',
     label: $t('common.status'),
@@ -70,10 +75,11 @@ const columns = ref([
       1: { label: $t('common.start'), type: 'primary' },
     },
     type: 'status',
+    width: 160,
   },
-  { field: 'list_order', label: $t('common.sort') },
-  { field: 'created_at', label: $t('common.created_at') },
-  { field: 'updated_at', label: $t('common.updated_at') },
+  { field: 'list_order', label: $t('common.sort'), width: 160 },
+  { field: 'created_at', label: $t('common.created_at'), width: 180 },
+  { field: 'updated_at', label: $t('common.updated_at'), width: 180 },
 ]);
 /* 添加 */
 const createModal = () => {
@@ -102,7 +108,7 @@ const rightButton = ref([
 
 const rightFunction = {
   delete: (row: any) => {
-    ElMessageBox.confirm($t('common.message.delete'), {
+    ElMessageBox.confirm($t('message.delete'), {
       type: 'warning',
     }).then(async () => {
       await delCompanyApi({ id: row.id });
@@ -133,6 +139,11 @@ onMounted(() => {
   // 创建路由守卫
   createRouterGuard(router);
 });
+const commands = ref([
+  {
+    type: 'create',
+  },
+]);
 
 provide('getList', getList);
 defineExpose({ createModal, pageChange, rightFunction });
@@ -140,12 +151,17 @@ defineExpose({ createModal, pageChange, rightFunction });
 
 <template>
   <div class="p-3">
-    <mixTopOperation :search-option="searchOption" />
+    <mixTopOperation
+      :command="commands"
+      :search-option="searchOption"
+      @search="search"
+    />
     <mixTableList
       :columns="columns"
       :local-buttons="rightButton"
       :pager="page"
       :table-data="tableData"
+      list-name="company_list"
     />
     <Modal />
   </div>
