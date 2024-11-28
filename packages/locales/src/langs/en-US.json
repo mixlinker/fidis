@@ -77,7 +77,8 @@
     "minute": "Minute",
     "handle_start": "Start",
     "handle_stop": "Stop",
-    "handle_run": "Execute Manually"
+    "handle_run": "Execute Manually",
+    "submit": "Submit"
   },
   "message": {
     "delete": "Confirm to Delete?",

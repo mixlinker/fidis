@@ -297,5 +297,32 @@
       "number": "Task Number",
       "status": "Task Status"
     }
+  },
+  "system": {
+    "title": "System Settings",
+    "sql": {
+      "title": "Database Settings",
+      "address": "Database Address",
+      "write": "Database Write Configuration",
+      "reset": "Reset Connection",
+      "adaps": "Feature Statistics",
+      "collect": "Offline Collection",
+      "index": "Index Analysis",
+      "retainer": "Process Duration",
+      "statistics": "Statistical Calculation",
+      "reset_tip": "Click to Reset the Connection"
+    },
+    "mixiot": {
+      "title": "MixIOT Access Settings",
+      "address": "MixIOT Interface Address",
+      "id": "APP ID",
+      "secret": "APP Secret"
+    },
+    "message": {
+      "sql_address": "Please enter the Database Address",
+      "mixiot_address": "Please enter the MixIOT Interface Address",
+      "mixiot_id": "Please enter the APP ID",
+      "mixiot_secret": "Please enter the APP Secret"
+    }
   }
 }

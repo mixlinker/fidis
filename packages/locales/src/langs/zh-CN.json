@@ -77,7 +77,8 @@
     "minute": "分",
     "handle_start": "启动",
     "handle_stop": "停止",
-    "handle_run": "手动执行"
+    "handle_run": "手动执行",
+    "submit": "提交"
   },
   "message": {
     "delete": "确认删除?",

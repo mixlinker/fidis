@@ -260,6 +260,38 @@ async function generateAccess(options: GenerateMenuAndRoutesOptions) {
         //     },
         //   ],
         // },
+        {
+          component: 'BasicLayout',
+          meta: {
+            icon: 'lucide:settings',
+            order: 4,
+            title: 'system.title',
+          },
+          name: 'system',
+          path: '/system',
+          children: [
+            {
+              name: 'systemSQLconfig',
+              path: '/systemSQLconfig',
+              component: '/system/sql/index.vue',
+              meta: {
+                affixTab: false,
+                icon: 'lucide:database-backup',
+                title: 'system.sql.title',
+              },
+            },
+            {
+              name: 'systemMixiotconfig',
+              path: '/systemMixiotconfig',
+              component: '/system/mixiot/index.vue',
+              meta: {
+                affixTab: false,
+                icon: 'lucide:cloud-cog',
+                title: 'system.mixiot.title',
+              },
+            },
+          ],
+        },
       ];
       const result = await getUserMenuApi();
       result.forEach((item) => {

@@ -10,7 +10,7 @@ import {
 } from '@vben/request';
 import { useAccessStore } from '@vben/stores';
 
-import { ElMessage } from 'element-plus';
+import { ElLoading, ElMessage } from 'element-plus';
 
 import { useAuthStore } from '#/store';
 
@@ -22,7 +22,7 @@ function createRequestClient(baseURL: string) {
   const client = new RequestClient({
     baseURL,
   });
-
+  let loadingInstance: any = null;
   /**
    * 重新认证逻辑
    */
@@ -60,7 +60,10 @@ function createRequestClient(baseURL: string) {
   client.addRequestInterceptor({
     fulfilled: async (config) => {
       const accessStore = useAccessStore();
-
+      loadingInstance = ElLoading.service({
+        background: 'rgba(0,0,0,0.1)',
+        fullscreen: true,
+      });
       config.headers.Authorization = formatToken(accessStore.accessToken);
       config.headers['Accept-Language'] = preferences.app.locale;
       return config;
@@ -71,7 +74,7 @@ function createRequestClient(baseURL: string) {
   client.addResponseInterceptor({
     fulfilled: (response) => {
       const { data: responseData, status } = response;
-
+      loadingInstance.close();
       const { code, info, msg, result } = responseData;
       if (status >= 200 && status < 400 && code === 200) {
         return result || responseData;

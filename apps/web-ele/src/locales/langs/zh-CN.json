@@ -297,5 +297,33 @@
       "number": "任务编号",
       "status": "任务状态"
     }
+  },
+  "system": {
+    "title": "系统设置",
+    "sql": {
+      "title": "数据库设置",
+      "address": "数据库地址",
+      "write": "数据库写入配置",
+      "reset": "重置连接",
+      "adaps": "特征统计",
+      "collect": "离线采集",
+      "index": "指数分析",
+      "retainer": "历程持续",
+      "statistics": "统计计算",
+      "reset_tip": "点击重置连接"
+    },
+    "mixiot": {
+      "title": "MixIOT接入设置",
+      "address": "MixIOT接口地址",
+      "id": "APP ID",
+      "secret": "APP Secret"
+    },
+    "message": {
+      "sql_address": "请输入数据库地址",
+      "mixiot_address": "请输入MixIOT接口地址",
+      "mixiot_id": "请输入APP ID",
+      "mixiot_secret": "请输入APP Secret",
+      "success": "操作成功"
+    }
   }
 }
