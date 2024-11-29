@@ -48,7 +48,7 @@
     "dayjs": "^1.11.13",
     "element-plus": "^2.8.2",
     "mixboard": "^1.0.6",
-    "mixlinker2d": "^1.1.21",
+    "mixlinker2d": "^1.1.23",
     "pinia": "2.2.2",
     "vue": "^3.5.4",
     "vue-router": "^4.4.4",

@@ -2,7 +2,12 @@
 import { computed, onMounted, ref } from 'vue';
 import { useRoute } from 'vue-router';
 
+// @ts-ignore 没有类型声明
+import mixlinker2d from 'mixlinker2d';
+
 import { proxyApi } from '#/api';
+
+import 'mixlinker2d/style';
 
 const route = useRoute();
 const dashBoardUid = computed(() => {

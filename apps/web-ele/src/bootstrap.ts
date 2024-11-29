@@ -9,8 +9,6 @@ import * as ElementPlusIconsVue from '@element-plus/icons-vue';
 import ElementPlus from 'element-plus';
 // @ts-ignore 没有类型声明
 import mixboard from 'mixboard';
-// @ts-ignore 没有类型声明
-import mixlinker2d from 'mixlinker2d';
 
 import { setupI18n } from '#/locales';
 
@@ -18,7 +16,6 @@ import App from './app.vue';
 import { router } from './router';
 
 import 'mixboard/style';
-// import 'mixlinker2d/style';
 
 import 'element-plus/dist/index.css';
 
@@ -36,7 +33,6 @@ async function bootstrap(namespace: string) {
   // 配置路由及路由守卫
   app.use(router);
   app.use(ElementPlus);
-  app.use(mixlinker2d);
   app.use(mixboard);
   app.mount('#app');
 }
