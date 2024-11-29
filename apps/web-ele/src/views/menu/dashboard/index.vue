@@ -7,8 +7,6 @@ import mixlinker2d from 'mixlinker2d';
 
 import { proxyApi } from '#/api';
 
-import 'mixlinker2d/style';
-
 const route = useRoute();
 const dashBoardUid = computed(() => {
   return route.fullPath.split('/')[3];

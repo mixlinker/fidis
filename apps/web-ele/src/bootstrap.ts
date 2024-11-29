@@ -16,6 +16,7 @@ import App from './app.vue';
 import { router } from './router';
 
 import 'mixboard/style';
+import 'mixlinker2d/style';
 
 import 'element-plus/dist/index.css';
 
