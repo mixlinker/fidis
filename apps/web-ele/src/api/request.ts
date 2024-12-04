@@ -97,7 +97,11 @@ function createRequestClient(baseURL: string) {
 
   // 通用的错误处理,如果没有进入上面的错误处理逻辑，就会进入这里
   client.addResponseInterceptor(
-    errorMessageResponseInterceptor((msg: string) => ElMessage.error(msg)),
+    errorMessageResponseInterceptor((msg: string, result: any) => {
+      const { response } = result;
+      ElMessage.error(response.data.msg || msg);
+      loadingInstance.close();
+    }),
   );
 
   return client;

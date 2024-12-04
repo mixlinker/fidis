@@ -262,6 +262,7 @@
       "title": "报表项目",
       "uid": "项目编号",
       "alias": "项目别名",
+      "detail": "报表项目详情",
       "name": "项目名称",
       "status": "项目状态",
       "file_name": "报表名称",
@@ -287,7 +288,8 @@
       "per_month": "按月",
       "per_date": "按天",
       "per_hour": "按时",
-      "please_upload_template": "请上传模板"
+      "please_upload_template": "请上传模板",
+      "report_template": "报表模板"
     },
     "result": {
       "title": "报表结果",

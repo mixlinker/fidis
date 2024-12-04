@@ -1,22 +1,30 @@
 <script setup lang="ts">
 import { onMounted, provide, reactive, ref } from 'vue';
-import { useRouter } from 'vue-router';
 
-import { ElMessageBox } from 'element-plus';
+import { ElMessage, ElMessageBox } from 'element-plus';
 
-import { delReportApi, getMenuListApi } from '#/api';
+import { delReportResultListApi, getReportResultApi } from '#/api';
 import mixTableList from '#/components/mix-table-list/index.vue';
 import mixTopOperation from '#/components/mix-top-operation/index.vue';
 import { $t } from '#/locales';
+import config from '#/utils/config';
 
-const router = useRouter();
 const tableData = ref<any[]>([]);
-
 const searchOption = reactive({
-  fieldKey: 'name',
+  fieldKey: 'uid',
   option: [
-    { label: $t('page.menu.name'), value: 'name' },
-    { label: $t('common.tag'), value: 'tag' },
+    { label: $t('report.result.uid'), value: 'uid' },
+    { label: $t('report.project.uid'), value: 'plan_uid' },
+    {
+      label: $t('report.result.status'),
+      option: [
+        { label: $t('common.success'), value: 1 },
+        { label: $t('common.failing'), value: 2 },
+        { label: $t('common.in_execution'), value: 0 },
+      ],
+      type: 'select',
+      value: 'status',
+    },
   ],
   searchValue: '',
 });
@@ -25,7 +33,6 @@ const page = reactive({
   pageSize: 20,
   total: 0,
 });
-
 interface ParamType {
   page_index: number;
   page_size: number;
@@ -38,9 +45,11 @@ const getList = async () => {
     page_size: page.pageSize,
   };
   if (searchOption.searchValue) {
-    param[searchOption.fieldKey] = searchOption.searchValue;
+    param.where_and = [
+      [searchOption.fieldKey, 'like', `%${searchOption.searchValue}%`],
+    ];
   }
-  const result = await getMenuListApi(param);
+  const result = await getReportResultApi(param);
   tableData.value = result.data;
   page.total = result.total_records;
 };
@@ -52,23 +61,41 @@ const pageChange = (current: number, size: number) => {
 };
 
 const columns = ref([
-  { field: 'name', label: $t('page.company.name') },
-  { field: 'tag', label: $t('common.tag'), type: 'tag' },
-  { field: 'list_order', label: $t('common.sort') },
-  { field: 'created_at', label: $t('common.created_at') },
-  { field: 'updated_at', label: $t('common.updated_at') },
+  { field: 'uid', label: $t('report.result.uid'), width: 180 },
+  { field: 'plan_uid', label: $t('report.project.uid'), width: 180 },
+  { field: 'project_name', label: $t('report.project.name'), width: 180 },
+  {
+    field: 'plan_type',
+    formatter: (row: any) => {
+      return config.reportTypes[row.plan_type];
+    },
+    label: $t('report.project.report_type'),
+    width: 180,
+  },
+  {
+    field: 'status',
+    label: $t('report.result.status'),
+    option: {
+      0: { label: $t('common.in_execution'), type: 'primary' },
+      1: { label: $t('common.success'), type: 'success' },
+      2: { label: $t('common.failing'), type: 'danger' },
+    },
+    type: 'status',
+    width: 180,
+  },
+  { field: 'created', label: $t('common.created_at'), width: 180 },
 ]);
 /* 右键菜单 */
 const rightButton = ref([
   {
-    icon: 'Postcard',
-    name: $t('common.detail'),
-    type: 'item',
+    icon: 'Download',
+    name: $t('common.download'),
+    type: 'download',
   },
   {
-    icon: 'Edit',
-    name: $t('common.edit'),
-    type: 'update',
+    icon: 'View',
+    name: $t('common.preview'),
+    type: 'preview',
   },
   {
     icon: 'Delete',
@@ -82,13 +109,27 @@ const rightFunction = {
     ElMessageBox.confirm($t('message.delete'), {
       type: 'warning',
     }).then(async () => {
-      await delReportApi({ id: row.id });
+      await delReportResultListApi({ uid: row.uid });
       getList();
     });
   },
-  item: (row: any) => {
-    router.push(`/reportDetail/${row.id}`);
+  download: (row: any) => {
+    const path = `${window.location.origin}/fidis/download/${row.file_path}`;
+    window.open(path);
   },
+  preview: (row: any) => {
+    if (row.file_path) {
+      const path = `${location.origin}/mixservice/storage/mixreport/${row.file_path}`;
+      const url = `https://view.officeapps.live.com/op/view.aspx?src=${path}`;
+      window.open(url);
+    } else {
+      ElMessage.error($t('message.undefined_file'));
+    }
+  },
+};
+const search = () => {
+  page.current = 1;
+  getList();
 };
 onMounted(() => {
   getList();
@@ -100,7 +141,7 @@ defineExpose({ pageChange, rightFunction });
 
 <template>
   <div class="p-3">
-    <mixTopOperation :search-option="searchOption" />
+    <mixTopOperation :search-option="searchOption" @search="search" />
     <mixTableList
       :columns="columns"
       :local-buttons="rightButton"
@@ -108,6 +149,5 @@ defineExpose({ pageChange, rightFunction });
       :table-data="tableData"
       list-name="report_result_list"
     />
-    <Modal />
   </div>
 </template>

@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import { getCurrentInstance, toRefs } from 'vue';
+import { computed, getCurrentInstance, toRefs } from 'vue';
 
 import { FolderOpened, Plus, Search } from '@element-plus/icons-vue';
 
 type optionType = {
   fieldKey: string;
-  option: { label: string; value: string }[];
+  option: { [key: string]: any; label: string; value: string }[];
   searchValue: string;
 };
 interface Props {
@@ -34,6 +34,20 @@ const buttons: btnType = {
 };
 const { fieldKey, searchValue } = toRefs(props.searchOption);
 
+const valueType = computed(() => {
+  return (
+    props?.searchOption?.option?.find((el) => el.value === fieldKey.value)
+      ?.type ?? 'input'
+  );
+});
+
+const valueOption = computed(() => {
+  return valueType.value === 'select'
+    ? props?.searchOption?.option?.find((el) => el.value === fieldKey.value)
+        ?.option
+    : [];
+});
+
 const search = () => {
   emit('search');
 };
@@ -53,7 +67,21 @@ const handleFunc = (type: string) => {
         :value="item.value"
       />
     </el-select>
+    <el-select
+      v-if="valueType === 'select'"
+      v-model="searchValue"
+      class="mr-[12px]"
+      style="width: 240px"
+    >
+      <el-option
+        v-for="item in valueOption"
+        :key="item.value"
+        :label="item.label"
+        :value="item.value"
+      />
+    </el-select>
     <el-input
+      v-else
       v-model="searchValue"
       :placeholder="$t('common.pleaseEnter')"
       class="mr-[12px]"

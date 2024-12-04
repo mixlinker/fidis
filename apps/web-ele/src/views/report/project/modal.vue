@@ -5,16 +5,19 @@ import type {
   FormRules,
   UploadInstance,
   UploadProps,
-  UploadRawFile,
+  UploadUserFile,
 } from 'element-plus';
 
 import { inject, reactive, ref } from 'vue';
 
 import { useVbenModal } from '@vben/common-ui';
 
-import { genFileId } from 'element-plus';
-
-import { addMenuApi, editMenuApi } from '#/api';
+import {
+  addReportApi,
+  editReportApi,
+  getReportItemApi,
+  uploadFileApi,
+} from '#/api';
 import { $t } from '#/locales';
 
 const getList = inject<() => void>('getList') as () => void;
@@ -41,21 +44,24 @@ const executeOption = [
 interface RuleForm {
   file_name: string;
   plan_type: number;
-  output_type: number[];
+  output_type: string;
   [key: string]: any;
 }
+const fileList = ref<UploadUserFile[]>([]);
 const initForm = () => {
+  fileList.value = [];
   return {
     alias: '',
     crontab: '* * * * *',
     file_name: '',
     focus_users: [],
     id: 0,
-    mapping_list: [],
-    output_type: [1], // 现在默认只有excel
+    mapping_list: '',
+    object_list: '',
+    output_type: '1', // 现在默认只有excel
     plan_description: '',
     plan_name: '',
-    plan_script: '',
+    plan_script: '{}',
     plan_type: 1,
     run_day: 1,
     run_hour: 0,
@@ -70,18 +76,25 @@ const initForm = () => {
 };
 const Form = ref<RuleForm>(initForm());
 const rules = reactive<FormRules<RuleForm>>({
-  list_order: [
+  plan_name: [
     {
-      message: $t('page.company.message.list_order'),
+      message: $t('common.pleaseEnter') + $t('report.project.file_name'),
       required: true,
       trigger: 'blur',
     },
   ],
-  name: [
+  plan_script: [
     {
-      message: $t('page.menu.message.name'),
+      message: $t('common.pleaseEnter') + $t('report.project.excel_script'),
       required: true,
       trigger: 'blur',
+    },
+  ],
+  template_file: [
+    {
+      message: $t('report.project.please_upload_template'),
+      required: true,
+      trigger: 'change',
     },
   ],
 });
@@ -112,13 +125,20 @@ const [Modal, modalApi] = useVbenModal({
   },
   onConfirm: async () => {
     if (FormRef.value) {
+      const data = {
+        ...Form.value,
+        file_name: Form.value.plan_name,
+        plan_script: JSON.parse(Form.value.plan_script),
+        run_type: Form.value.type === 0 ? 0 : Form.value.run_type,
+      };
       await FormRef.value.validate();
-      await (modalType.value === 'add'
-        ? addMenuApi(Form.value)
-        : editMenuApi(Form.value));
-
-      modalApi.close();
-      getList();
+      const result = await (modalType.value === 'add'
+        ? addReportApi(data)
+        : editReportApi(data));
+      if (result) {
+        modalApi.close();
+        getList();
+      }
     }
   },
   onOpenChange: async (isOpen) => {
@@ -126,11 +146,15 @@ const [Modal, modalApi] = useVbenModal({
       const data = modalApi.getData<RuleForm>();
       if (data) {
         modalType.value = 'edit';
-        if (!data.tag) {
-          data.tag = [];
-        }
-        Form.value = { ...data };
-        Form.value.tag = [...data.tag];
+        const newData = await getReportItemApi({ uid: data.uid });
+        fileList.value = [
+          { name: newData.template_file, url: newData.template_file },
+        ];
+        Form.value = {
+          ...newData,
+          plan_script: JSON.stringify(newData.plan_script),
+          type: newData.run_type ? 1 : 0,
+        };
       } else {
         modalType.value = 'add';
       }
@@ -140,17 +164,27 @@ const [Modal, modalApi] = useVbenModal({
 
 /* 上传操作 */
 const upload = ref<UploadInstance>();
-const handleExceed: UploadProps['onExceed'] = (files) => {
+const handleUpload = async (item: any) => {
   upload.value!.clearFiles();
-  const file = files[0] as UploadRawFile;
-  file.uid = genFileId();
-  upload.value!.handleStart(file);
+  const fd = new FormData();
+  fd.append('file', item.file); // 传文件
+  fd.append('category', 'mixreport_template'); // 传文件
+  const result: { [key: string]: any } = await uploadFileApi(fd);
+  if (result) {
+    Form.value.template_file = result.relative_path;
+    fileList.value = [
+      { name: result.relative_path, url: result.relative_path },
+    ];
+  }
 };
-const handleUpload = async () => {
-  // const fd = new FormData();
-  // fd.append('file', item.file); // 传文件
-  // fd.append('system', 'mixreport/template'); // 传文件
-  // const result = await uploadFileApi(fd);
+const handleRemove: UploadProps['onRemove'] = () => {
+  fileList.value = [];
+  Form.value.template_file = '';
+};
+
+const handlePreview: UploadProps['onPreview'] = (file) => {
+  const path = `${window.location.origin}/fidis/download/${file.url}`;
+  window.open(path);
 };
 </script>
 
@@ -172,8 +206,16 @@ const handleUpload = async () => {
       label-width="auto"
       status-icon
     >
-      <el-form-item :label="$t('report.project.uid')" prop="uid">
-        <el-input v-model="Form.uid" :placeholder="$t('placeholder.input')" />
+      <el-form-item
+        v-if="modalType === 'edit'"
+        :label="$t('report.project.uid')"
+        prop="uid"
+      >
+        <el-input
+          v-model="Form.uid"
+          :placeholder="$t('placeholder.input')"
+          disabled
+        />
       </el-form-item>
       <el-form-item :label="$t('report.project.name')" prop="plan_name">
         <el-input
@@ -265,15 +307,17 @@ const handleUpload = async () => {
         />
       </el-form-item>
       <el-form-item
-        :label="$t('report.project.excel_script')"
-        name="template_file"
+        :label="$t('report.project.report_template')"
+        prop="template_file"
         style="display: flex"
       >
         <el-upload
           ref="upload"
+          v-model:file-list="fileList"
           :http-request="handleUpload"
-          :limit="1"
-          :on-exceed="handleExceed"
+          :limit="2"
+          :on-preview="handlePreview"
+          :on-remove="handleRemove"
         >
           <template #trigger>
             <el-button type="primary">
@@ -284,12 +328,12 @@ const handleUpload = async () => {
       </el-form-item>
       <el-form-item
         :label="$t('report.project.excel_script')"
-        name="plan_script"
+        prop="plan_script"
       >
-        <el-input :rows="6" type="textarea" />
+        <el-input v-model="Form.plan_script" :rows="6" type="textarea" />
       </el-form-item>
       <el-form-item :label="$t('common.description')">
-        <el-input :rows="4" type="textarea" />
+        <el-input v-model="Form.plan_description" :rows="4" type="textarea" />
       </el-form-item>
     </el-form>
   </Modal>

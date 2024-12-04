@@ -78,12 +78,14 @@
     "handle_start": "Start",
     "handle_stop": "Stop",
     "handle_run": "Execute Manually",
-    "submit": "Submit"
+    "submit": "Submit",
+    "preview": "Preview"
   },
   "message": {
     "delete": "Confirm to Delete?",
     "delete_success": "Delete Successfully",
-    "copy": "Copied Successfully"
+    "copy": "Copied Successfully",
+    "undefined_file": "The file address is invalid"
   },
   "fallback": {
     "pageNotFound": "Oops! Page Not Found",
