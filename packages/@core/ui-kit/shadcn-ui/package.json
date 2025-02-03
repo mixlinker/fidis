@@ -45,10 +45,10 @@
     "@vben-core/shared": "workspace:*",
     "@vben-core/typings": "workspace:*",
     "@vueuse/core": "^11.0.3",
-    "class-variance-authority": "^0.7.0",
-    "lucide-vue-next": "^0.439.0",
-    "radix-vue": "^1.9.5",
-    "vee-validate": "^4.13.2",
-    "vue": "^3.5.4"
+    "class-variance-authority": "^0.7.1",
+    "lucide-vue-next": "^0.474.0",
+    "radix-vue": "^1.9.13",
+    "vee-validate": "^4.15.0",
+    "vue": "^3.5.13"
   }
 }
